@@ -1,1 +1,0 @@
-https://dzone.com/articles/quick-guide-to-microservices-with-spring-boot-20-e?utm_source=dzone&utm_medium=article&utm_campaign=spring-boot-microservices-cluster

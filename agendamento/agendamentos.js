@@ -1,45 +1,62 @@
-const express = require("express")
+const express = require("express");
 const app = express();
 app.use(express.json());
 
 //Mongoose ODM mapeador objeto relacional de node.js para MONGO.DB 
 const mongoose = require("mongoose");
-mongoose.connect({"mongodb+srv://testemongodb:modbMAdTU3sjEqns@testandomongodb-pklgf.mongodb.net/test?retryWrites=true&w=majority", () => console.log("Conectou ao Banco de Dados"); });
+mongoose.connect({"mongodb+srv://testemongodb:modbMAdTU3sjEqns@testandomongodb-pklgf.mongodb.net/test?retryWrites=true&w=majority", {useNewUrlParser: true} , () => console.log("Conectou ao Banco de Dados"); });
 //User do BD: testemongodb e Senha do BD: modbMAdTU3sjEqns
+
+require("./agendamento");
+//Constante que vai ser o acesso a esta tabela
+const Agendamento = mongoose.model("agendamento");
 
 //Microservico Agendamento (3001)
 const port = process.env.PORT || 3001
 
-//Por enquanto assim, depois criar CRUDs de cada agendamento e Conectar ao BD
-const agendamento =  [
-{ id: 1, name: "nome1", email: "joao@gmail.com"}
-{ id: 2, name: "nome2", email: "elll2@gmail.com"}
-{ id: 3, name: "nome3", email: "sss@gmail.com"}
-];
-
-app.get("/api/agendamento", (req, res) => {
+//Health Check
+app.get("/api/agendamentos/vivo", (req, res) => {
 	res.send("Olá o microservico Agendamento esta Online");
 });
 
-app.get("/api/agendamento/:Id", (req, res) => {
-	
-	const retorno = agendamento.find(c => c.id === parseInt(req.params.id));
-	if(!retorno) res.status(404).send("Nao existe na lista com o ID especificado");
-	res.send(retorno);
+//Lista todos os Agendamentos Marcados
+app.get("/api/agendamentos", (req, res) => {
+	Agendamento.find().then( (agendamentos) => {
+		res.json(agendamentos);
+	});
 });
 
-app.post("/api/agendamento/:Id", (req, res) => {
+//Escolhe Aquele Elemento entre os Agendamentos Marcados
+app.get("/api/agendamento/:id", (req, res) => {
 	
+	Agendamento.findById(req.params.id).then( (agendamento) => {
+		if(!agendamento) res.send("Nao existe na lista com o ID especificado");
+		res.json(agendamento);
+	});
+});
+
+//Para DELETAR Agendamento.findOneAndRemove(req.params.id).then();
+
+//Cria um novo agendamento por POST
+app.post("/api/agendamento/:id", (req, res) => {
 	
-	const novo = {
-		id: agendamento.length + 1;
-		name: req.body.name
+	var novo = {
+		horarioInicio: req.body.horarioInicio,
+		horarioTermino: req.body.horarioTermino,
+		dia: req.body.dia,
+		nome: req.body.nome,
+		email: req.body.email
 	}
-	agendamento.push(novo);
+	
+	//Cria o agendamento na tabela do MongoDb com Mongoose
+	var retorno = new Agendamento(novo)
+	retorno.save().then( () => {
+		console.log("Agendamento novo salvo no BD");
+	});
 	res.send(novo);
 });
 
 
 app.listen(port, () => {
-  console.log(`servicoX listening on ${port}`)
+  console.log(`Servico agendamentos escutando na porta: ${port}`)
 });

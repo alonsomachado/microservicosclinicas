@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+
 app.use(express.json());
 
 //Mongoose ODM mapeador objeto relacional de node.js para MONGO.DB 
@@ -19,7 +20,7 @@ app.get("/api/pagamento", (req, res) => {
 	res.send("Olá o microservico Agendamento esta Online");
 });
 
-app.get("/api/pagamento/:Id", (req, res) => {
+app.get("/api/pagamento/:id", (req, res) => {
 	
 	const retorno = pagamento.find(c => c.id === parseInt(req.params.id));
 	if(!retorno) res.status(404).send("Nao existe na lista com o ID especificado");

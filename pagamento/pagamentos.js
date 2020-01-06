@@ -7,8 +7,8 @@ app.use(express.json());
 const mongoose = require("mongoose");
 //mongoose.connect({"", () => console.log("Conectou ao Banco de Dados"); });
 
-//Microservico Pagamento (3001)
-const port = process.env.PORT || 3001
+//Microservico Pagamento (3000)
+const port = process.env.PORT || 3000
 
 const pagamento =  [
 { id: 1, name: "nome1", email: "joao@gmail.com"}

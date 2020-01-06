@@ -1,4 +1,0 @@
-grant {
-  // Totalmente permissivo!!!
-  permission java.security.AllPermission;
-};

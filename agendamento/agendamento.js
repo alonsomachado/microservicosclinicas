@@ -1,32 +1,34 @@
 const mongoose = require("mongoose");
 //Mongoose ODM mapeador objeto relacional de node.js para MONGO.DB 
 //Mongoose Model para Agendamento 
-mongoose.model("Agendamento", {
-	//Atributos : Horario, Dia, NomeCompleto, Email,
-	horarioInicio{
+	//Atributos : Horario, Dia, NomeCompleto, Email
+const AgendamentoSchema = new mongoose.Schema({
+  horarioInicio: {
 		type: Number,
 		require: true
 	},
-	horarioTermino{
+	horarioTermino: {
 		type: Number,
 		require: true
 	},
-	dia{
+	dia: {
 		type: Date,
 		require: true
 	},
-	nome{
+	nome: {
 		type: String,
 		require: true
 	},
-	email{
+	email: {
 		type: String,
 		require: true
 	},
-	criadoEm{
+	criadoEm: {
 		type: Date,
 		Default: Date.now
 	}
-	
 });
+const Agendamento = mongoose.model("Agendamento", AgendamentoSchema);
+module.exports = Agendamento;
+	
 

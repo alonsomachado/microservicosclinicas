@@ -22,6 +22,10 @@ mongoose.model("Agendamento", {
 	email{
 		type: String,
 		require: true
+	},
+	criadoEm{
+		type: Date,
+		Default: Date.now
 	}
 	
 });

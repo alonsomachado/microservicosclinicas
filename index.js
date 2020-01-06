@@ -8,7 +8,7 @@ app.use(express.json());
 //Microservico Principal (API GATEWAY)
 const port = process.env.PORT || 8080
 
-//Microservico Pagamento (3002)
+//Microservico Pagamento (3000)
 //Microservico Agendamento (3001)
 
 app.get("/api", (req, res) => {

@@ -11,8 +11,8 @@ require("./agendamento");
 //Constante que vai ser o acesso a esta tabela
 const Agendamento = mongoose.model("agendamento");
 
-//Microservico Agendamento (3001)
-const port = process.env.PORT || 3001
+//Microservico Agendamento (3000)
+const port = process.env.PORT || 3000
 
 //Health Check
 app.get("/api/agendamentos/vivo", (req, res) => {
@@ -20,14 +20,14 @@ app.get("/api/agendamentos/vivo", (req, res) => {
 });
 
 //Lista todos os Agendamentos Marcados
-app.get("/api/agendamentos", (req, res) => {
+app.get("/api/agendamentos", async (req, res) => {
 	Agendamento.find().then( (agendamentos) => {
 		res.json(agendamentos);
 	});
 });
 
 //Escolhe Aquele Elemento entre os Agendamentos Marcados
-app.get("/api/agendamento/:id", (req, res) => {
+app.get("/api/agendamento/:id", async (req, res) => {
 	
 	Agendamento.findById(req.params.id).then( (agendamento) => {
 		if(!agendamento) res.send("Nao existe na lista com o ID especificado");
@@ -35,10 +35,10 @@ app.get("/api/agendamento/:id", (req, res) => {
 	});
 });
 
-//Para DELETAR Agendamento.findOneAndRemove(req.params.id).then();
+//Para DELETAR Agendamento.findbyIdAndRemove(req.params.id).then();
 
 //Cria um novo agendamento por POST
-app.post("/api/agendamento/:id", (req, res) => {
+app.post("/api/agendamento/:id", async (req, res) => {
 	
 	var novo = {
 		horarioInicio: req.body.horarioInicio,
@@ -49,11 +49,11 @@ app.post("/api/agendamento/:id", (req, res) => {
 	}
 	
 	//Cria o agendamento na tabela do MongoDb com Mongoose
-	var retorno = new Agendamento(novo)
-	retorno.save().then( () => {
+	var agendar = new Agendamento(novo)
+	const salvo = await agendar.save().then( () => {
 		console.log("Agendamento novo salvo no BD");
 	});
-	res.send(novo);
+	res.send(salvo);
 });
 
 

@@ -7,8 +7,8 @@ app.use(express.json());
 const mongoose = require("mongoose");
 //mongoose.connect({"", () => console.log("Conectou ao Banco de Dados"); });
 
-//Microservico Pagamento (3002)
-const port = process.env.PORT || 3002
+//Microservico Pagamento (3001)
+const port = process.env.PORT || 3001
 
 const pagamento =  [
 { id: 1, name: "nome1", email: "joao@gmail.com"}
@@ -16,18 +16,18 @@ const pagamento =  [
 { id: 3, name: "nome3", email: "sss@gmail.com"}
 ];
 
-app.get("/api/pagamento", (req, res) => {
+app.get("/api/pagamento", async (req, res) => {
 	res.send("Olá o microservico Agendamento esta Online");
 });
 
-app.get("/api/pagamento/:id", (req, res) => {
+app.get("/api/pagamento/:id", async (req, res) => {
 	
 	const retorno = pagamento.find(c => c.id === parseInt(req.params.id));
 	if(!retorno) res.status(404).send("Nao existe na lista com o ID especificado");
 	res.send(retorno);
 });
 
-app.post("/api/pagamento/:Id", (req, res) => {
+app.post("/api/pagamento/:Id", async (req, res) => {
 	
 	const novo = {
 		id: pagamento.length + 1;

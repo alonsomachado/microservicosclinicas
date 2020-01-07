@@ -14,8 +14,9 @@ const mongoose = require('mongoose');
 //Setar os BDs do Atlas no YAML em alguma variavel de ambiente para reutilizar a mesma imagem
 // mongodb+srv://testemongodb:modbMAdTU3sjEqns@cluster0-pmvdk.mongodb.net/test?retryWrites=true&w=majority //Braga
 // mongodb+srv://testemongodb:modbMAdTU3sjEqns@testandomongodb-pklgf.mongodb.net/test?retryWrites=true&w=majority //Porto
+const bdcon = process.env.BD_URL || "mongodb+srv://testemongodb:modbMAdTU3sjEqns@cluster0-pmvdk.mongodb.net/test?retryWrites=true&w=majority"
 
-mongoose.connect(${process.env.BD_URL}, {
+mongoose.connect(bdcon, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });

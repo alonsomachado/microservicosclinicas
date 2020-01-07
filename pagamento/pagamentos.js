@@ -11,9 +11,10 @@ const mongoose = require('mongoose');
 const port = process.env.PORT || 30123
 
 const pagamento =  [
-{ id: 1, name: 'Joao', email: 'joao@gmail.com'}
-{ id: 2, name: 'nome2', email: 'elll2@gmail.com'}
-{ id: 3, name: 'Pedro', email: 'Pesss@gmail.com'}
+{ id: 1, name: 'Joao', email: 'joao@gmail.com', pagamento: 20},
+{ id: 2, name: 'nome2', email: 'elll2@gmail.com', pagamento: 15},
+{ id: 3, name: 'Pedro', email: 'Pesss@gmail.com', pagamento: 25},
+{ id: 4, name: 'Paula', email: 'Pasdasd@gmail.com', pagamento: 15}
 ];
 
 app.get('/api/pagamento', async (req, res) => {
@@ -27,11 +28,13 @@ app.get('/api/pagamento/:id', async (req, res) => {
 	res.send(retorno);
 });
 
-app.post('/api/pagamento/:Id', async (req, res) => {
+app.post('/api/pagamento/', async (req, res) => {
 	
 	const novo = {
-		id: pagamento.length + 1;
-		name: req.body.name
+		id: pagamento.length + 1,
+		name: req.body.name,
+		email: req.body.email,
+		pagamento: req.body.pagamento
 	}
 	pagamento.push(novo);
 	res.send(novo);

@@ -1,6 +1,6 @@
 FROM node:carbon
 WORKDIR /usr/src/app
-RUN npm install --save express mongoose
+RUN npm install --save express mongoose body-parser
 EXPOSE 3000
 COPY agendamentos.js .
 COPY agendamento.js .

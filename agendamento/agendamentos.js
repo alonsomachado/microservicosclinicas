@@ -11,33 +11,37 @@ app.use(express.json());
 //Mongoose ODM mapeador objeto relacional de node.js para MONGO.DB 
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb+srv://testemongodb:modbMAdTU3sjEqns@testandomongodb-pklgf.mongodb.net/test?retryWrites=true&w=majority', {
+//Setar os BDs do Atlas no YAML em alguma variavel de ambiente para reutilizar a mesma imagem
+// mongodb+srv://testemongodb:modbMAdTU3sjEqns@cluster0-pmvdk.mongodb.net/test?retryWrites=true&w=majority //Braga
+// mongodb+srv://testemongodb:modbMAdTU3sjEqns@testandomongodb-pklgf.mongodb.net/test?retryWrites=true&w=majority //Porto
+
+mongoose.connect(${process.env.BD_URL}, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
 //User do BD: testemongodb e Senha do BD: modbMAdTU3sjEqns
 
-require("./agendamento");
+require('./agendamento');
 //Constante que vai ser o acesso a esta tabela
-const Agendamento = mongoose.model("Agendamento");
+const Agendamento = mongoose.model('Agendamento');
 
 //Health Check
-app.get("/api/agendamentos/vivo", (req, res) => {
-	res.send("Olá o microservico Agendamento esta Online");
-});
+//app.get('/api/', (req, res) => {
+//	res.send('Olá o microservico Agendamento esta Online');
+//});
 
 //Lista todos os Agendamentos Marcados
-app.get("/api/agendamentos", (req, res) => {
+app.get('/api/agendamentos', (req, res) => {
 	Agendamento.find().then( (agendamentos) => {
 		res.json(agendamentos);
 	});
 });
 
 //Escolhe Aquele Elemento entre os Agendamentos Marcados
-app.get("/api/agendamento/:id", (req, res) => {
+app.get('/api/agendamento/:id', (req, res) => {
 	
 	Agendamento.findById(req.params.id).then( (agendamento) => {
-		if(!agendamento) res.send("Nao existe na lista com o ID especificado");
+		if(!agendamento) res.send('Nao existe na lista com o ID especificado');
 		res.json(agendamento);
 	});
 });
@@ -45,7 +49,7 @@ app.get("/api/agendamento/:id", (req, res) => {
 //Para DELETAR Agendamento.findbyIdAndRemove(req.params.id).then();
 
 //Cria um novo agendamento por POST
-app.post("/api/agendamento/:id", (req, res) => {
+app.post('/api/agendamento/:id', (req, res) => {
 	
 	const novo = {
 		horarioInicio: req.body.horarioInicio,
@@ -58,15 +62,11 @@ app.post("/api/agendamento/:id", (req, res) => {
 	//Cria o agendamento na tabela do MongoDb com Mongoose
 	var agendar = new Agendamento(novo)
 	const salvo = agendar.save();
-	console.log("Agendamento novo salvo no BD");
+	console.log('Agendamento novo salvo no BD');
 	res.send(salvo);
 });
 
 //Microservico Agendamento Default 3000
 const port = process.env.PORT || 3000
-const host = process.env.IP || 'localhost'
 
-app.listen(port, host, function(err) {
-  if (err) return console.log(err);
-  console.log("Listening at http://%s:%s", host, port);
-});
+app.listen(port, () => console.log('Agendamentos na porta %s!', port));

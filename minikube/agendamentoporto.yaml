@@ -29,7 +29,7 @@ spec:
           - name: BD_URL
             value: mongodb+srv://testemongodb:modbMAdTU3sjEqns@testandomongodb-pklgf.mongodb.net/test?retryWrites=true&w=majority
         ports:
-        - containerPort: 8080
+        - containerPort: 30123
           protocol: TCP
         resources: {}
         terminationMessagePath: /dev/termination-log
@@ -60,7 +60,7 @@ spec:
   ports:
   - port: 80
     protocol: TCP
-    targetPort: 8080
+    targetPort: 30123
   selector:
     run: agendamentoporto
   sessionAffinity: None

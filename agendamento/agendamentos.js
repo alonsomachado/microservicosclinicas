@@ -66,7 +66,7 @@ app.post('/api/agendamento/:id', (req, res) => {
 	res.send(salvo);
 });
 
-//Microservico Agendamento Default 3000
-const port = process.env.PORT || 3000
+//Microservico Agendamento Default 30123
+const port = process.env.PORT || 30123
 
 app.listen(port, () => console.log('Agendamentos na porta %s!', port));

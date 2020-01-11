@@ -31,6 +31,11 @@ const Agendamento = mongoose.model('Agendamento');
 //	res.send('Olá o microservico Agendamento esta Online');
 //});
 
+app.get('/', async (req, res) => {
+	res.status(200);
+	//res.send('Olá o microservico Agendamento esta Online');
+});
+
 //Lista todos os Agendamentos Marcados
 app.get('/api/agendamentos', (req, res) => {
 	Agendamento.find().then( (agendamentos) => {

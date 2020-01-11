@@ -40,15 +40,6 @@ metadata:
     run: pagamentobraga
   name: pagamentobraga
   namespace: default
-  annotations:
-    getambassador.io/config: |
-      ---
-      apiVersion: ambassador/v0
-      kind:  Mapping
-      name:  agendamentoporto_mapping
-      prefix: /pagamento/porto/
-      rewrite: /api/pagamento/
-      service: pagamentobraga
 spec:
   ports:
   - port: 80

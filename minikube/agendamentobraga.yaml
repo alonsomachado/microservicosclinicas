@@ -47,15 +47,6 @@ metadata:
     run: agendamentobraga
   name: agendamentobraga
   namespace: default
-  annotations:
-    getambassador.io/config: |
-      ---
-      apiVersion: ambassador/v0
-      kind:  Mapping
-      name:  agendamentobraga_mapping
-      prefix: /agendamento/
-      rewrite: /api/agendamento/
-      service: agendamentobraga
 spec:
   ports:
   - port: 80

@@ -17,18 +17,40 @@ const pagamento =  [
 { id: 4, name: 'Paula', email: 'Pasdasd@gmail.com', pagamento: 15}
 ];
 
-app.get('/api/pagamento', async (req, res) => {
-	res.send('Olá o microservico Agendamento esta Online');
+app.get('/', async (req, res) => {
+	//res.status(200);
+	res.send('Olá o microservico Pagamento esta Online em /');
 });
 
-app.get('/api/pagamento/:id', async (req, res) => {
+app.get('/:id', async (req, res) => {
+	res.send('ACESSOU GET ID PADRAO');
+	//const retorno = pagamento.find(c => c.id === parseInt(req.params.id));
+	//if(!retorno) res.status(404).send('Nao existe na lista com o ID especificado');
+	//res.send(retorno);
+});
+
+app.get('/braga/pagamento', async (req, res) => {
+	res.send('Olá o microservico Pagamento esta Online em /braga/pagamento SEM  O /');
+	//const retorno = pagamento.find();
+	//if(!retorno) res.status(404).send('Nao existe na lista com o ID especificado');
+	//res.send(retorno);
+});
+
+app.get('/braga/pagamento/', async (req, res) => {
+	res.send('Olá o microservico Pagamento esta Online em /braga/pagamento/ !!!');
+	//const retorno = pagamento.find();
+	//if(!retorno) res.status(404).send('Nao existe na lista com o ID especificado');
+	//res.send(retorno);
+});
+
+app.get('/braga/pagamento/:id', async (req, res) => {
 	
 	const retorno = pagamento.find(c => c.id === parseInt(req.params.id));
 	if(!retorno) res.status(404).send('Nao existe na lista com o ID especificado');
 	res.send(retorno);
 });
 
-app.post('/api/pagamento/', async (req, res) => {
+app.post('/braga/pagamento/', async (req, res) => {
 	
 	const novo = {
 		id: pagamento.length + 1,

@@ -1,10 +1,13 @@
 const express = require('express');
 const app = express();
+//Mongoose ODM mapeador objeto relacional de node.js para MONGO.DB 
+const mongoose = require('mongoose');
+const redis = require('redis');
+
+const subscriber = redis.createClient();
 
 app.use(express.json());
 
-//Mongoose ODM mapeador objeto relacional de node.js para MONGO.DB 
-const mongoose = require('mongoose');
 //mongoose.connect({'', () => console.log('Conectou ao Banco de Dados'); });
 
 //Microservico Pagamento (30123)
@@ -17,8 +20,21 @@ const pagamento =  [
 { id: 4, name: 'Paula', email: 'Pasdasd@gmail.com', pagamento: 15}
 ];
 
+//Recebeu Mensagem do Redis (Publisher/Subscribe)
+subscriber.on("message",(channel,message) => {
+    console.log("Recebeu dados :"+message);
+	try {
+	  var age = JSON.parse(message); 
+	  console.log(age); //Aparecer objeto json
+	} catch (ex) {
+	  console.error(ex);
+	}
+})
+
+subscriber.subscribe("agendamento-notify");
+
 app.get('/', async (req, res) => {
-	//res.status(200);
+	
 	res.send('Olá o microservico Pagamento esta Online em /');
 });
 

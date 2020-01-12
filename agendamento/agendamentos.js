@@ -1,5 +1,12 @@
 const express = require('express');
 const app = express();
+//Mongoose ODM mapeador objeto relacional de node.js para MONGO.DB 
+const mongoose = require('mongoose');
+
+const redis = require('redis');
+
+const publisher = redis.createClient();
+
 
 app.use(express.json());
 
@@ -8,8 +15,6 @@ app.use(express.json());
 
 //https://expressjs.com/en/4x/api.html#router e https://expressjs.com/en/guide/routing.html
 
-//Mongoose ODM mapeador objeto relacional de node.js para MONGO.DB 
-const mongoose = require('mongoose');
 
 //Setar os BDs do Atlas no YAML em alguma variavel de ambiente para reutilizar a mesma imagem
 // mongodb+srv://testemongodb:modbMAdTU3sjEqns@cluster0-pmvdk.mongodb.net/test?retryWrites=true&w=majority //Braga
@@ -25,6 +30,13 @@ mongoose.connect(bdcon, {
 require('./agendamento');
 //Constante que vai ser o acesso a esta tabela
 const Agendamento = mongoose.model('Agendamento');
+
+const medico =  [
+{ id: 1, name: 'Joao Pedro Cunha', email: 'joaopc@gmail.com'},
+{ id: 2, name: 'Manoel de Sa Carvalhal', email: 'manoelsc@gmail.com'},
+{ id: 3, name: 'Pedro Afonso Melo Campos', email: 'pedroafm@gmail.com'},
+{ id: 4, name: 'Paula Tavares Guimaraes', email: 'paulatg@gmail.com'}
+];
 
 //Health Check
 //app.get('/api/', (req, res) => {
@@ -64,6 +76,9 @@ app.post('/api/agendamento/:id', (req, res) => {
 		nome: req.body.nome,
 		email: req.body.email
 	}
+	
+	publisher.publish("agendamento-notify",JSON.stringify(novo))
+    //console.log("Publicou no Redis - agendamento-notify");
 	
 	//Cria o agendamento na tabela do MongoDb com Mongoose
 	var agendar = new Agendamento(novo)

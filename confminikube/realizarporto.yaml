@@ -3,14 +3,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    run: realizarbraga
-  name: realizarbraga
+    run: realizarporto
+  name: realizarporto
   namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: realizarbraga
+      run: realizarporto
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -19,12 +19,12 @@ spec:
   template:
     metadata:
       labels:
-        run: realizarbraga
+        run: realizarporto
     spec:
       containers:
       - image: micro-realizar:v1
         imagePullPolicy: IfNotPresent
-        name: realizarbraga
+        name: realizarporto
         ports:
         - containerPort: 30123
           protocol: TCP
@@ -37,8 +37,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    run: realizarbraga
-  name: realizarbraga
+    run: realizarporto
+  name: realizarporto
   namespace: default
 spec:
   ports:
@@ -46,6 +46,6 @@ spec:
     protocol: TCP
     targetPort: 30123
   selector:
-    run: realizarbraga
+    run: realizarporto
   sessionAffinity: None
   type: ClusterIP

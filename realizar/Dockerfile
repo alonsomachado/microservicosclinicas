@@ -2,6 +2,6 @@ FROM node:carbon
 WORKDIR /usr/src/app
 RUN npm install --save express mongoose body-parser redis
 EXPOSE 3000
-COPY pagamentos.js .
+COPY realizar.js .
 ENTRYPOINT chmod 777 -R /usr/src/app
-ENTRYPOINT node pagamentos.js
+ENTRYPOINT node realizar.js

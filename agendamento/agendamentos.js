@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 
 const redis = require('redis');
 
-const publisher = redis.createClient(6379, pubsub.redis.default.svc.cluster.local);
+const publisher = redis.createClient(6379, "pubsub.redis.default.svc.cluster.local");
 
 
 
@@ -97,6 +97,43 @@ app.post('/braga/agendamento/:id', (req, res) => {
 		
 	publisher.publish("agendamento:braga",JSON.stringify(novo))
 	//console.log("Publicou no Redis Pub/Sub- agendamento:braga");
+	res.send(salvo);
+	
+});
+
+//Escolhe Aquele Elemento entre os Agendamentos Marcados
+app.get('/porto/agendamento/:id', (req, res) => {
+	
+	Agendamento.findById(req.params.id).then( (agendamento) => {
+		if(!agendamento) res.send('Nao existe na lista com o ID especificado');
+		res.json(agendamento);
+	});
+});
+
+//Para DELETAR Agendamento.findbyIdAndRemove(req.params.id).then();
+
+//Cria um novo agendamento por POST
+app.post('/porto/agendamento/:id', (req, res) => {
+	
+	const novo = {
+		horarioInicio: req.body.horarioInicio,
+		horarioTermino: req.body.horarioTermino,
+		dia: req.body.dia,
+		nome: req.body.nome,
+		email: req.body.email,
+		medico: req.body.medico
+	}
+	
+		
+	//Cria o agendamento na tabela do MongoDb com Mongoose
+	//var agendar = new Agendamento(novo)
+	//const salvo = agendar.save();
+	//console.log('Agendamento novo salvo no BD');
+	agend.push(novo);
+	console.log('Agendamento novo salvo na Lista');
+		
+	publisher.publish("agendamento:porto",JSON.stringify(novo))
+	//console.log("Publicou no Redis Pub/Sub- agendamento:porto");
 	res.send(salvo);
 	
 });

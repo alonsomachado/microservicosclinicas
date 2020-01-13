@@ -4,8 +4,8 @@ const app = express();
 const mongoose = require('mongoose');
 const redis = require('redis');
 
-const subscriber = redis.createClient(6379, pubsub.redis.default.svc.cluster.local);
-const publisher = redis.createClient(6379, pubsub.redis.default.svc.cluster.local);
+const subscriber = redis.createClient(6379, "pubsub.redis.default.svc.cluster.local");
+const publisher = redis.createClient(6379, "pubsub.redis.default.svc.cluster.local");
 
 app.use(express.json());
 
@@ -31,6 +31,7 @@ subscriber.on('message',(channel,message) => {
 })
 
 subscriber.subscribe("agendamento:braga");
+subscriber.subscribe("agendamento:porto");
 
 app.get('/', async (req, res) => {
 	

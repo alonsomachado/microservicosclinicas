@@ -4,7 +4,7 @@ const app = express();
 const mongoose = require('mongoose');
 const redis = require('redis');
 
-const subscriber = redis.createClient(6379, pubsub.redis.default.svc.cluster.local);
+const subscriber = redis.createClient(6379, "pubsub.redis.default.svc.cluster.local");
 
 app.use(express.json());
 
@@ -30,7 +30,7 @@ subscriber.on('message',(channel,message) => {
 })
 
 subscriber.subscribe("realiza:braga");
-//subscriber.subscribe("realiza:porto");
+subscriber.subscribe("realiza:porto");
 
 app.get('/', async (req, res) => {
 	

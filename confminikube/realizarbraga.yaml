@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: realizarbraga
+  name: realizarbraga
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: realizarbraga
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        run: realizarbraga
+    spec:
+      containers:
+      - image: micro-pagamento:v1
+        imagePullPolicy: IfNotPresent
+        name: realizarbraga
+        ports:
+        - containerPort: 30123
+          protocol: TCP
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 30
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: realizarbraga
+  name: realizarbraga
+  namespace: default
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 30123
+  selector:
+    run: realizarbraga
+  sessionAffinity: None
+  type: ClusterIP

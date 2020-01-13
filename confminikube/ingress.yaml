@@ -19,6 +19,10 @@ spec:
         backend:
           serviceName: pagamentobraga
           servicePort: 80
+      - path: /braga/realizar
+        backend:
+          serviceName: realizarbraga
+          servicePort: 80
       - path: /porto/agendamento
         backend:
           serviceName: agendamentoporto
@@ -26,5 +30,9 @@ spec:
       - path: /porto/pagamento
         backend:
           serviceName: pagamentoporto
+          servicePort: 80
+      - path: /porto/realizar
+        backend:
+          serviceName: realizarporto
           servicePort: 80
           

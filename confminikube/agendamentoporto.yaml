@@ -52,6 +52,9 @@ spec:
   - port: 80
     protocol: TCP
     targetPort: 30123
+  - port: 27017
+    protocol: TCP
+    targetPort: 27017
   selector:
     run: agendamentoporto
   sessionAffinity: None

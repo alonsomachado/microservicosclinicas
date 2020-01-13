@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: redis-service
+  name: redis
 spec:
   selector:
-    db: redis
+    name: redis
   ports:
   - protocol: TCP
     port: 6379
@@ -14,7 +14,7 @@ kind: Deployment
 metadata:
   name: redis
   labels:
-    db: redis
+    name: redis
 spec:
   replicas: 1
   selector:
@@ -24,8 +24,10 @@ spec:
     metadata:
       labels:
         app: redis
-        db: redis
+        name: redis
     spec:
+      hostname: pubsub
+      subdomain: redis
       containers:
       - name: redis
         image: redis:4

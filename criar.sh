@@ -1,4 +1,6 @@
 eval $(minikube docker-env)
+kubectl apply -f ./confminikube/redisvolume.yaml
+kubectl apply -f ./confminikube/redis.yaml
 docker build -t micro-agendamento:v1 ./agendamento
 docker build -t micro-pagamento:v1 ./pagamento
 minikube addons enable ingress

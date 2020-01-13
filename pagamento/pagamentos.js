@@ -4,7 +4,7 @@ const app = express();
 const mongoose = require('mongoose');
 const redis = require('redis');
 
-const subscriber = redis.createClient();
+const subscriber = redis.createClient(6379, pubsub.redis.default.svc.cluster.local);
 
 app.use(express.json());
 
@@ -14,24 +14,23 @@ app.use(express.json());
 const port = process.env.PORT || 30123
 
 const pagamento =  [
-{ id: 1, name: 'Joao', email: 'joao@gmail.com', pagamento: 20},
-{ id: 2, name: 'nome2', email: 'elll2@gmail.com', pagamento: 15},
-{ id: 3, name: 'Pedro', email: 'Pesss@gmail.com', pagamento: 25},
-{ id: 4, name: 'Paula', email: 'Pasdasd@gmail.com', pagamento: 15}
+{ id: 1, name: 'Teste1', email: 'joao@gmail.com', pagamento: 20},
+{ id: 2, name: 'Teste2', email: 'elll2@gmail.com', pagamento: 15},
 ];
 
 //Recebeu Mensagem do Redis (Publisher/Subscribe)
-subscriber.on("message",(channel,message) => {
-    console.log("Recebeu dados :"+message);
+subscriber.on('message',(channel,message) => {
+    console.log('Recebeu dados ${channel}:'+message);
 	try {
-	  var age = JSON.parse(message); 
-	  console.log(age); //Aparecer objeto json
+	  var agen = JSON.parse(message); 
+	  console.log(agen); //Aparecer objeto json
 	} catch (ex) {
 	  console.error(ex);
 	}
 })
 
-subscriber.subscribe("agendamento-notify");
+subscriber.subscribe("realiza:braga");
+//subscriber.subscribe("realiza:porto");
 
 app.get('/', async (req, res) => {
 	
@@ -66,7 +65,26 @@ app.get('/braga/pagamento/:id', async (req, res) => {
 	res.send(retorno);
 });
 
+app.get('/porto/pagamento/:id', async (req, res) => {
+	
+	const retorno = pagamento.find(c => c.id === parseInt(req.params.id));
+	if(!retorno) res.status(404).send('Nao existe na lista com o ID especificado');
+	res.send(retorno);
+});
+
 app.post('/braga/pagamento/', async (req, res) => {
+	
+	const novo = {
+		id: pagamento.length + 1,
+		name: req.body.name,
+		email: req.body.email,
+		pagamento: req.body.pagamento
+	}
+	pagamento.push(novo);
+	res.send(novo);
+});
+
+app.post('/porto/pagamento/', async (req, res) => {
 	
 	const novo = {
 		id: pagamento.length + 1,

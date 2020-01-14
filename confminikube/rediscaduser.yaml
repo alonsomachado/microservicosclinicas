@@ -15,6 +15,7 @@ metadata:
   name: rediscaduser
   labels:
     name: rediscaduser
+  namespace: default
 spec:
   replicas: 1
   selector:
@@ -27,7 +28,7 @@ spec:
         name: rediscaduser
     spec:
       hostname: caduser
-      subdomain: redis
+      subdomain: rediscaduser
       containers:
       - name: rediscaduser
         image: redis:4
@@ -37,7 +38,7 @@ spec:
         ports:
         - containerPort: 6379
         volumeMounts:
-        - mountPath: /data
+        - mountPath: /data/caduser
           name: rediscaduser-volume
       volumes:
       - name: rediscaduser-volume
@@ -53,7 +54,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/mnt/data"
+    path: "/mnt/data/caduser"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

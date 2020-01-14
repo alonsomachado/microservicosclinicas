@@ -64,14 +64,14 @@ app.post('/braga/realizar/', async (req, res) => {
 	
 	const novo = {
 		id: lista.length + 1,
-		valor: req.body.valor,
-		agendamento: req.body.agendamento
+		agendamento: req.body.agendamento,
+		valor: req.body.valor
 	}
 	lista.push(novo);
 	console.log('Realiza salvo na Lista');
 		
 	publisher.publish("realiza:braga",JSON.stringify(novo));
-	//console.log("Publicou no Redis Pub/Sub- realiza:braga");
+	console.log("Publicou no Redis Pub/Sub- realiza:braga");
 	res.send(novo);
 });
 
@@ -79,14 +79,14 @@ app.post('/porto/realizar/', async (req, res) => {
 	
 	const novo = {
 		id: lista.length + 1,
-		valor: req.body.valor,
-		agendamento: req.body.agendamento
+		agendamento: req.body.agendamento,
+		valor: req.body.valor
 	}
 	lista.push(novo);
 	console.log('Realiza salvo na Lista');
 		
 	publisher.publish("realiza:porto",JSON.stringify(novo));
-	//console.log("Publicou no Redis Pub/Sub- realiza:braga");
+	console.log("Publicou no Redis Pub/Sub- realiza:braga");
 	res.send(novo);
 });
 

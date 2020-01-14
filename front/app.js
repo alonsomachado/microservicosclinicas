@@ -7,16 +7,14 @@ const redis = require('redis');
 const axios = require('axios');
 
 // Create Redis Client
-let client = redis.createClient(6379, "caduser.redis.default.svc.cluster.local");
+let client = redis.createClient(6379, "caduser.rediscaduser.default.svc.cluster.local");
 
 client.on('connect', function(){
   console.log('Connected to Redis...');
 });
 
-// Set Port
 const port = 30000;
 
-// Init app
 const app = express();
 
 // View Engine
@@ -27,7 +25,7 @@ app.set('view engine', 'handlebars');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 
-// methodOverride
+// methodOverride para funcionar o DELETE
 app.use(methodOverride('_method'));
 
 // Search Page
@@ -35,7 +33,7 @@ app.get('/', function(req, res, next){
   res.render('searchusers');
 });
 
-// Search processing
+// Procurar
 app.post('/user/search', function(req, res, next){
   let id = req.body.id;
 
@@ -53,7 +51,7 @@ app.post('/user/search', function(req, res, next){
   });
 });
 
-// Add User Page
+// Add User
 app.get('/user/add', function(req, res, next){
   res.render('adduser');
 });

@@ -25,10 +25,11 @@ const notas =   [
 
 //Recebeu Mensagem do Redis (Publisher/Subscribe)
 subscriber.on('message',(channel,message) => {
-    console.log('Recebeu dados ${channel}:'+message);
+    //console.log('Recebeu dados'+ channel +":"+message);
 	try {
 	  var agen = JSON.parse(message); 
-	  console.log(agen); //Aparecer objeto json
+	  var cidade = channel.substring(8);
+	  console.log(cidade+""+agen); //Aparecer objeto json
 	  notas.push(agen);
 	} catch (ex) {
 	  console.error(ex);

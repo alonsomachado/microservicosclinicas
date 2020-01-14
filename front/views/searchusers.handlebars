@@ -1,5 +1,9 @@
 <h1>Procurar Usuario</h1>
-{{#if error}} <span>{{error}}</span>{{/if}}
+{{#if error}} <div class="alert alert-dismissible alert-danger">
+	  <button type="button" class="close" data-dismiss="alert">&times;</button>
+	  <strong>Alerta!</strong> {{error}}.
+	</div>
+	{{/if}}
 <form class="form-inline" method="POST" action="/user/search">
   <div class="form-group">
     <input type="text" name="id" class="form-control" placeholder="Encontrar Usuario Cadastrado por ID">

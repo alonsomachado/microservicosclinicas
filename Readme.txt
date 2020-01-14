@@ -8,9 +8,11 @@ docker run -i --name age -p 30123:30123 micro-agendamento:v1
 
 kubectl describe pod redis
 kubectl describe ingress ingress-fanout
+kubectl apply -f jumpod.yaml
 kubectl exec jumpod -- printenv
 kubectl exec -it agendamentobraga-c445f986f-ppf7h ping pubsub.redis.default.svc.cluster.local
 kubectl exec -it jumpod nslookup pubsub.redis.default.svc.cluster.local
+kubectl delete pod jumpod
 
 Resolver problema de rede no minikube
 sudo rm /etc/resolv.conf

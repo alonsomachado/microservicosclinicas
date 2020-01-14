@@ -79,12 +79,12 @@ app.get('/porto/pagamento', function(req, res, next){
 
 app.post('/porto/pagamento', function(req, res, next){
 	
-	/*app.post("/api/porto/pagamento", {
-		  
-		name = req.body.name,
-		nif = req.body.nif,
-		pagamento = req.body.pagamento
-	})*/
+		
+	/*app.post("/api/porto/pagamento", function (req, res) => {
+	
+		res.redirect('/porto/pagamento');
+	}*/
+	
 	
 	res.redirect('/api/porto/pagamento');
 });

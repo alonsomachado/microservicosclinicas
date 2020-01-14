@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const redis = require('redis');
 const axios = require('axios');
+const request = require('request');   
 
 // Create Redis Client
 let client = redis.createClient(6379, "caduser.rediscaduser.default.svc.cluster.local");
@@ -54,16 +55,22 @@ app.get('/braga/pagamento', function(req, res, next){
   res.render('addpagamentob');
 });
 
-app.post('/braga/pagamento', function(req, res, next){
+app.post('/braga/pagamento', function(req, response, next){
 	
-	axios.post("/api/braga/pagamento", {
-		  
-		name = req.body.name,
-		nif = req.body.nif,
-		pagamento = req.body.pagamento
-	}
+	/*app.post("/api/braga/pagamento", function(req, res);*/
 	
-	res.redirect('/');
+	var options = {
+        method: 'POST',
+        url: '/api/braga/pagamento',
+    }
+    request(options, function(err, response, body) {
+        if (err) {
+            return res.status(500).end();
+        }
+        res.send(body); // send whatever you want here
+    });
+	
+	res.redirect('/api/braga/pagamento');
 });
 
 app.get('/porto/pagamento', function(req, res, next){
@@ -72,14 +79,14 @@ app.get('/porto/pagamento', function(req, res, next){
 
 app.post('/porto/pagamento', function(req, res, next){
 	
-	axios.post("/api/porto/pagamento", {
+	/*app.post("/api/porto/pagamento", {
 		  
 		name = req.body.name,
 		nif = req.body.nif,
 		pagamento = req.body.pagamento
-	}
+	})*/
 	
-	res.redirect('/');
+	res.redirect('/api/porto/pagamento');
 });
 
 app.get('/porto/agendamento', function(req, res, next){
@@ -88,7 +95,7 @@ app.get('/porto/agendamento', function(req, res, next){
 
 app.post('/porto/agendamento', function(req, res, next){
 	
-	axios.post("/api/porto/agendamento", {
+	/*axios.post("/api/porto/agendamento", {
 		  
 		horarioInicio = req.body.horarioInicio,
 		horarioTermino = req.body.horarioTermino,
@@ -96,7 +103,7 @@ app.post('/porto/agendamento', function(req, res, next){
 		nome = req.body.nome,
 		email  = req.body.email,
 		medico  = req.body.medico
-	}
+	})*/
 	
 	res.redirect('/');
 });
@@ -107,7 +114,7 @@ app.get('/braga/agendamento', function(req, res, next){
 
 app.post('/braga/agendamento', function(req, res, next){
 	
-	axios.post("/api/braga/agendamento", {
+	/*axios.post("/api/braga/agendamento", {
 		  
 		horarioInicio = req.body.horarioInicio,
 		horarioTermino = req.body.horarioTermino,
@@ -115,7 +122,7 @@ app.post('/braga/agendamento', function(req, res, next){
 		nome = req.body.nome,
 		email  = req.body.email,
 		medico  = req.body.medico
-	}
+	})*/
 	
 	res.redirect('/');
 });
@@ -127,13 +134,13 @@ app.get('/porto/realizar', function(req, res, next){
 app.post('/porto/realizar', function(req, res, next){
 	
   
-	axios.post("/api/porto/realizar", {
+	/*axios.post("/api/porto/realizar", {
 		  
 		idagendamento = req.body.idagendamento,
 		notafiscal = req.body.notafiscal,
 		valor = req.body.valor
 		
-	}
+	})*/
 	
 	res.redirect('/');
 });
@@ -146,13 +153,13 @@ app.get('/braga/realizar', function(req, res, next){
 app.post('/braga/realizar', function(req, res, next){
 	
   
-	axios.post("/api/braga/realizar", {
+	/*axios.post("/api/braga/realizar", {
 		  
 		idagendamento = req.body.idagendamento,
 		notafiscal = req.body.notafiscal,
 		valor = req.body.valor
 		
-	}
+	})*/
 	
 	res.redirect('/');
 });

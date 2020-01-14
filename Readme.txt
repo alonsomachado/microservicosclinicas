@@ -1,5 +1,6 @@
 docker build -t micro-agendamento:v1 ./agendamento
 docker build -t micro-pagamento:v1 ./pagamento
+docker build -t micro-front:v1 ./front
 
 kubectl apply -f ./confminikube/jumpod.yaml
 

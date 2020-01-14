@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Agendador Clinicas Portugal</title>
+    <link rel="stylesheet" href="https://bootswatch.com/4/materia/bootstrap.min.css">
+	  <link href="https://getbootstrap.com/docs/4.1/examples/sticky-footer-navbar/sticky-footer-navbar.css" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container">
+		
+        <div class="navbar-header">
+		<a class="navbar-brand" href="/">Clinica</a>
+		</div>
+		<div>
+        <ul class="nav nav-tabs">
+			  
+			<li class="nav-item">
+				<a class="nav-link" data-toggle="tab" href="/user/add">Adicionar Usuario</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" data-toggle="tab" href="/braga/">Braga</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" data-toggle="tab" href="/porto/">Porto</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link disabled" data-toggle="tab" href="/test">Teste</a>
+			</li>
+			  
+			  
+		</ul>
+		</div>
+          
+        
+        
+      </div>
+    </nav>
+	<div class="alert alert-dismissible alert-danger">
+	  <button type="button" class="close" data-dismiss="alert">&times;</button>
+	  <strong>Alerta!</strong> <a href="#" class="alert-link">Erro ao Enviar</a> tente novamente mais tarde.
+	</div>
+	 <div class="container">
+      {{{body}}}
+    </div>
+  </body>
+  <footer class="footer">
+      <div class="container">
+        <span class="text-muted">Trabalho Microservicos -- MEI ESTG 2019/2020 .</span>
+		<span class="text-muted">Alonso Machado -- ®Copyright 2020</span>
+      </div>
+   </footer>
+</html>

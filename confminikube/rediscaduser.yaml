@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rediscaduser
+spec:
+  selector:
+    name: rediscaduser
+  ports:
+  - protocol: TCP
+    port: 6379
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rediscaduser
+  labels:
+    name: rediscaduser
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rediscaduser
+  template:
+    metadata:
+      labels:
+        app: rediscaduser
+        name: rediscaduser
+    spec:
+      hostname: caduser
+      subdomain: redis
+      containers:
+      - name: rediscaduser
+        image: redis:4
+        args: ["--appendonly", "yes", "--save", "900", "1", "--save", "30", "1"]
+        tty: true
+        stdin: true
+        ports:
+        - containerPort: 6379
+        volumeMounts:
+        - mountPath: /data
+          name: rediscaduser-volume
+      volumes:
+      - name: rediscaduser-volume
+        emptyDir: {}
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: rediscaduser-volume
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: rediscaduser-volume-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+        

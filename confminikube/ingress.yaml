@@ -35,4 +35,8 @@ spec:
         backend:
           serviceName: realizarporto
           servicePort: 80
+      - path: /
+        backend:
+          serviceName: frontend
+          servicePort: 80
           

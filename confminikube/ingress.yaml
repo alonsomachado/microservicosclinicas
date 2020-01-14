@@ -11,27 +11,27 @@ spec:
   rules:
   - http:
       paths:
-      - path: /braga/agendamento
+      - path: /api/braga/agendamento
         backend:
           serviceName: agendamentobraga
           servicePort: 80
-      - path: /braga/pagamento
+      - path: /api/braga/pagamento
         backend:
           serviceName: pagamentobraga
           servicePort: 80
-      - path: /braga/realizar
+      - path: /api/braga/realizar
         backend:
           serviceName: realizarbraga
           servicePort: 80
-      - path: /porto/agendamento
+      - path: /api/porto/agendamento
         backend:
           serviceName: agendamentoporto
           servicePort: 80
-      - path: /porto/pagamento
+      - path: /api/porto/pagamento
         backend:
           serviceName: pagamentoporto
           servicePort: 80
-      - path: /porto/realizar
+      - path: /api/porto/realizar
         backend:
           serviceName: realizarporto
           servicePort: 80

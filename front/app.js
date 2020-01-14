@@ -33,7 +33,6 @@ app.get('/', function(req, res, next){
   res.render('searchusers');
 });
 
-// Procurar
 app.post('/user/search', function(req, res, next){
   let id = req.body.id;
 
@@ -51,19 +50,138 @@ app.post('/user/search', function(req, res, next){
   });
 });
 
-// Add User
+app.get('/braga/pagamento', function(req, res, next){
+  res.render('addpagamentob');
+});
+
+app.post('/braga/pagamento', function(req, res, next){
+	data{
+		  
+		let name = req.body.name;
+		let nif = req.body.nif;
+		let pagamento = req.body.pagamento;
+	}
+	const ret = await axios.post("/api/braga/pagamento", data);
+	
+	res.redirect('/');
+});
+
+app.get('/porto/pagamento', function(req, res, next){
+  res.render('addpagamentop');
+});
+
+app.post('/porto/pagamento', function(req, res, next){
+	data{
+		  
+		let name = req.body.name;
+		let nif = req.body.nif;
+		let pagamento = req.body.pagamento;
+	}
+	const ret = await axios.post("/api/porto/pagamento", data);
+	
+	res.redirect('/');
+});
+
+app.get('/porto/agendamento', function(req, res, next){
+  res.render('addagendamentop');
+});
+
+app.post('/porto/agendamento', function(req, res, next){
+	data{
+		  
+		let horarioInicio = req.body.horarioInicio;
+		let horarioTermino = req.body.horarioTermino;
+		let dia = req.body.dia;
+		let nome = req.body.nome;
+		let email  = req.body.email;
+		let medico  = req.body.medico;
+	}
+  
+	const ret = await axios.post("/api/porto/agendamento", data);
+	
+	res.redirect('/');
+});
+
+app.get('/braga/agendamento', function(req, res, next){
+  res.render('addagendamentob');
+});
+
+app.post('/braga/agendamento', function(req, res, next){
+	data{
+		  
+		let horarioInicio = req.body.horarioInicio;
+		let horarioTermino = req.body.horarioTermino;
+		let dia = req.body.dia;
+		let nome = req.body.nome;
+		let email  = req.body.email;
+		let medico  = req.body.medico;
+	}
+  
+	const ret = await axios.post("/api/braga/agendamento", data);
+	
+	res.redirect('/');
+});
+
+app.get('/porto/realizar', function(req, res, next){
+  res.render('addagendamentop');
+});
+
+app.post('/porto/realizar', function(req, res, next){
+	data{
+		  
+		let idagendamento = req.body.idagendamento;
+		let notafiscal = req.body.notafiscal;
+		let valor = req.body.valor;
+		
+	}
+  
+	const ret = await axios.post("/api/porto/realizar", data);
+	
+	res.redirect('/');
+});
+
+
+app.get('/braga/realizar', function(req, res, next){
+  res.render('addagendamentob');
+});
+
+app.post('/braga/realizar', function(req, res, next){
+	data{
+		  
+		let idagendamento = req.body.idagendamento;
+		let notafiscal = req.body.notafiscal;
+		let valor = req.body.valor;
+		
+	}
+  
+	const ret = await axios.post("/api/braga/realizar", data);
+	
+	res.redirect('/');
+});
+
+
+
+app.get('/braga', function(req, res, next){
+  res.render('braga');
+});
+
+app.get('/porto', function(req, res, next){
+  res.render('porto');
+});
+
 app.get('/user/add', function(req, res, next){
   res.render('adduser');
 });
 
-// Process Add User Page
+// Add User Post
 app.post('/user/add', function(req, res, next){
   let id = req.body.id;
   let first_name = req.body.first_name;
   let last_name = req.body.last_name;
   let email = req.body.email;
   let phone = req.body.phone;
-
+  
+	//const ret = await axios.post(requestUrl, JSON.stringify(data));
   client.hmset(id, [
     'first_name', first_name,
     'last_name', last_name,

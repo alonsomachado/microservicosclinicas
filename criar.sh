@@ -1,6 +1,5 @@
 eval $(minikube docker-env)
-kubectl apply -f ./confminikube/redispubsub.yaml
-kubectl apply -f ./confminikube/rediscaduser.yaml
+kubectl apply -f ./confminikube/redis/
 docker build -t micro-agendamento:v1 ./agendamento
 docker build -t micro-pagamento:v1 ./pagamento
 docker build -t micro-realizar:v1 ./realizar

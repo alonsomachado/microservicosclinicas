@@ -55,13 +55,13 @@ app.get('/braga/pagamento', function(req, res, next){
 });
 
 app.post('/braga/pagamento', function(req, res, next){
-	data{
+	
+	axios.post("/api/braga/pagamento", {
 		  
-		let name = req.body.name;
-		let nif = req.body.nif;
-		let pagamento = req.body.pagamento;
+		name = req.body.name,
+		nif = req.body.nif,
+		pagamento = req.body.pagamento
 	}
-	const ret = await axios.post("/api/braga/pagamento", data);
 	
 	res.redirect('/');
 });
@@ -71,13 +71,13 @@ app.get('/porto/pagamento', function(req, res, next){
 });
 
 app.post('/porto/pagamento', function(req, res, next){
-	data{
+	
+	axios.post("/api/porto/pagamento", {
 		  
-		let name = req.body.name;
-		let nif = req.body.nif;
-		let pagamento = req.body.pagamento;
+		name = req.body.name,
+		nif = req.body.nif,
+		pagamento = req.body.pagamento
 	}
-	const ret = await axios.post("/api/porto/pagamento", data);
 	
 	res.redirect('/');
 });
@@ -87,17 +87,16 @@ app.get('/porto/agendamento', function(req, res, next){
 });
 
 app.post('/porto/agendamento', function(req, res, next){
-	data{
+	
+	axios.post("/api/porto/agendamento", {
 		  
-		let horarioInicio = req.body.horarioInicio;
-		let horarioTermino = req.body.horarioTermino;
-		let dia = req.body.dia;
-		let nome = req.body.nome;
-		let email  = req.body.email;
-		let medico  = req.body.medico;
+		horarioInicio = req.body.horarioInicio,
+		horarioTermino = req.body.horarioTermino,
+		dia = req.body.dia,
+		nome = req.body.nome,
+		email  = req.body.email,
+		medico  = req.body.medico
 	}
-  
-	const ret = await axios.post("/api/porto/agendamento", data);
 	
 	res.redirect('/');
 });
@@ -107,17 +106,16 @@ app.get('/braga/agendamento', function(req, res, next){
 });
 
 app.post('/braga/agendamento', function(req, res, next){
-	data{
+	
+	axios.post("/api/braga/agendamento", {
 		  
-		let horarioInicio = req.body.horarioInicio;
-		let horarioTermino = req.body.horarioTermino;
-		let dia = req.body.dia;
-		let nome = req.body.nome;
-		let email  = req.body.email;
-		let medico  = req.body.medico;
+		horarioInicio = req.body.horarioInicio,
+		horarioTermino = req.body.horarioTermino,
+		dia = req.body.dia,
+		nome = req.body.nome,
+		email  = req.body.email,
+		medico  = req.body.medico
 	}
-  
-	const ret = await axios.post("/api/braga/agendamento", data);
 	
 	res.redirect('/');
 });
@@ -127,15 +125,15 @@ app.get('/porto/realizar', function(req, res, next){
 });
 
 app.post('/porto/realizar', function(req, res, next){
-	data{
+	
+  
+	axios.post("/api/porto/realizar", {
 		  
-		let idagendamento = req.body.idagendamento;
-		let notafiscal = req.body.notafiscal;
-		let valor = req.body.valor;
+		idagendamento = req.body.idagendamento,
+		notafiscal = req.body.notafiscal,
+		valor = req.body.valor
 		
 	}
-  
-	const ret = await axios.post("/api/porto/realizar", data);
 	
 	res.redirect('/');
 });
@@ -146,15 +144,15 @@ app.get('/braga/realizar', function(req, res, next){
 });
 
 app.post('/braga/realizar', function(req, res, next){
-	data{
+	
+  
+	axios.post("/api/braga/realizar", {
 		  
-		let idagendamento = req.body.idagendamento;
-		let notafiscal = req.body.notafiscal;
-		let valor = req.body.valor;
+		idagendamento = req.body.idagendamento,
+		notafiscal = req.body.notafiscal,
+		valor = req.body.valor
 		
 	}
-  
-	const ret = await axios.post("/api/braga/realizar", data);
 	
 	res.redirect('/');
 });

@@ -70,7 +70,7 @@ app.post('/braga/realizar/', async (req, res) => {
 	lista.push(novo);
 	console.log('Realiza salvo na Lista');
 		
-	publisher.publish("realiza:braga",JSON.stringify(novo))
+	publisher.publish("realiza:braga",JSON.stringify(novo));
 	//console.log("Publicou no Redis Pub/Sub- realiza:braga");
 	res.send(novo);
 });
@@ -85,12 +85,12 @@ app.post('/porto/realizar/', async (req, res) => {
 	lista.push(novo);
 	console.log('Realiza salvo na Lista');
 		
-	publisher.publish("realiza:porto",JSON.stringify(novo))
+	publisher.publish("realiza:porto",JSON.stringify(novo));
 	//console.log("Publicou no Redis Pub/Sub- realiza:braga");
 	res.send(novo);
 });
 
 
 app.listen(port, () => {
-  console.log(`Pagamento na porta ${port}`)
+  console.log(`Realiza na porta ${port}`)
 });

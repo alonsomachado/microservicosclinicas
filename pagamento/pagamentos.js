@@ -18,12 +18,18 @@ const pagamento =  [
 { id: 2, name: 'Teste2', email: 'elll2@gmail.com', pagamento: 15},
 ];
 
+const notas =   [
+{ id: 1, name: 'Teste1', email: 'joao@gmail.com', pagamento: 20},
+{ id: 2, name: 'Teste2', email: 'elll2@gmail.com', pagamento: 15},
+];
+
 //Recebeu Mensagem do Redis (Publisher/Subscribe)
 subscriber.on('message',(channel,message) => {
     console.log('Recebeu dados ${channel}:'+message);
 	try {
 	  var agen = JSON.parse(message); 
 	  console.log(agen); //Aparecer objeto json
+	  notas.push(agen);
 	} catch (ex) {
 	  console.error(ex);
 	}
@@ -45,17 +51,17 @@ app.get('/:id', async (req, res) => {
 });
 
 app.get('/braga/pagamento', async (req, res) => {
-	res.send('Olá o microservico Pagamento esta Online em /braga/pagamento SEM  O /');
-	//const retorno = pagamento.find();
-	//if(!retorno) res.status(404).send('Nao existe na lista com o ID especificado');
-	//res.send(retorno);
+	//res.send('Olá o microservico Pagamento esta Online em /braga/pagamento SEM  O /');
+	const retorno = pagamento.map(c => c);
+	if(!retorno) res.status(404).send('Nao existe na lista com o ID especificado');
+	res.send(retorno);
 });
 
-app.get('/braga/pagamento/', async (req, res) => {
-	res.send('Olá o microservico Pagamento esta Online em /braga/pagamento/ !!!');
-	//const retorno = pagamento.find();
-	//if(!retorno) res.status(404).send('Nao existe na lista com o ID especificado');
-	//res.send(retorno);
+app.get('/porto/pagamento', async (req, res) => {
+	//res.send('Olá o microservico Pagamento esta Online em /braga/pagamento SEM  O /');
+	const retorno = pagamento.map(c => c);
+	if(!retorno) res.status(404).send('Nao existe na lista com o ID especificado');
+	res.send(retorno);
 });
 
 app.get('/braga/pagamento/:id', async (req, res) => {
@@ -80,6 +86,7 @@ app.post('/braga/pagamento/', async (req, res) => {
 		email: req.body.email,
 		pagamento: req.body.pagamento
 	}
+	console.log(novo);
 	pagamento.push(novo);
 	res.send(novo);
 });
@@ -92,6 +99,7 @@ app.post('/porto/pagamento/', async (req, res) => {
 		email: req.body.email,
 		pagamento: req.body.pagamento
 	}
+	console.log(novo);
 	pagamento.push(novo);
 	res.send(novo);
 });

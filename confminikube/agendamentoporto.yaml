@@ -25,19 +25,12 @@ spec:
       - image: micro-agendamento:v1
         imagePullPolicy: IfNotPresent
         name: agendamentoporto
-        env:
-          - name: BD_URL
-            value: mongodb+srv://testemongodb:modbMAdTU3sjEqns@testandomongodb-pklgf.mongodb.net/test?retryWrites=true&w=majority
         ports:
         - containerPort: 30123
           protocol: TCP
-        resources: {}
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
-      securityContext: {}
       terminationGracePeriodSeconds: 30
 ---
 apiVersion: v1

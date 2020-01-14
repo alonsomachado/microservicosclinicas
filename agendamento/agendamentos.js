@@ -20,60 +20,69 @@ app.use(express.json());
 //Setar os BDs do Atlas no YAML em alguma variavel de ambiente para reutilizar a mesma imagem
 // mongodb+srv://testemongodb:modbMAdTU3sjEqns@cluster0-pmvdk.mongodb.net/test?retryWrites=true&w=majority //Braga
 // mongodb+srv://testemongodb:modbMAdTU3sjEqns@testandomongodb-pklgf.mongodb.net/test?retryWrites=true&w=majority //Porto
-const bdcon = process.env.BD_URL || "mongodb+srv://testemongodb:modbMAdTU3sjEqns@cluster0-pmvdk.mongodb.net/test?retryWrites=true&w=majority"
+//const bdcon = process.env.BD_URL || "mongodb+srv://testemongodb:modbMAdTU3sjEqns@cluster0-pmvdk.mongodb.net/test?retryWrites=true&w=majority"
 
-mongoose.connect(bdcon, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+//mongoose.connect(bdcon, {
+//  useNewUrlParser: true,
+//  useUnifiedTopology: true
+//});
 //User do BD: testemongodb e Senha do BD: modbMAdTU3sjEqns
 
-require('./agendamento');
+//require('./agendamento');
 //Constante que vai ser o acesso a esta tabela
-const Agendamento = mongoose.model('Agendamento');
+//const Agendamento = mongoose.model('Agendamento');
 
 const medico =  [
-{ id: 1, nome: 'Joao Pedro Cunha', email: 'joaopc@gmail.com'},
-{ id: 2, nome: 'Manoel de Sa Carvalhal', email: 'manoelsc@gmail.com'},
-{ id: 3, nome: 'Pedro Afonso Melo Campos', email: 'pedroafm@gmail.com'},
-{ id: 4, nome: 'Paula Tavares Guimaraes', email: 'paulatg@gmail.com'}
+{ id: 1, nome: 'Joao Pedro Cunha', email: 'joaopc@gmail.com', especialidade: 'Pediatra'},
+{ id: 2, nome: 'Manoel de Sa Carvalhal', email: 'manoelsc@gmail.com', especialidade: 'Clinico Geral'},
+{ id: 3, nome: 'Pedro Afonso Melo Campos', email: 'pedroafm@gmail.com', especialidade: 'Oftamologista'},
+{ id: 4, nome: 'Paula Tavares Guimaraes', email: 'paulatg@gmail.com', especialidade: 'Pediatra'}
 ];
 
 const agend =  [
 
-{ id: 1, horarioInicio: '08:00', horarioTermino: '08:55', dia: '14/01/2020', nome: 'Teste1', email: 'joao@gmail.com', medico: 1},
-{ id: 2, horarioInicio: '09:00', horarioTermino: '09:55', dia: '14/01/2020', nome: 'Teste2', email: 'joao@gmail.com', medico: 1},
-{ id: 3, horarioInicio: '08:00', horarioTermino: '08:55', dia: '16/01/2020', nome: 'Teste3', email: 'joao@gmail.com', medico: 3},
+{ id: 1, horarioInicio: '08:00', horarioTermino: '08:55', dia: '14/01/2020', nome: 'Teste1', email: 'joao@gmail.com', medico: 'Joao Pedro Cunha'},
+{ id: 2, horarioInicio: '09:00', horarioTermino: '09:55', dia: '14/01/2020', nome: 'Teste2', email: 'joao@gmail.com', medico: 'Joao Pedro Cunha'},
+{ id: 3, horarioInicio: '08:00', horarioTermino: '08:55', dia: '16/01/2020', nome: 'Teste3', email: 'joao@gmail.com', medico: 'Paula Tavares Guimaraes'},
 
 ];
 
-//Health Check
-//app.get('/api/', (req, res) => {
-//	res.send('Olá o microservico Agendamento esta Online');
-//});
-
 app.get('/', async (req, res) => {
-	res.status(200);
-	//res.send('Olá o microservico Agendamento esta Online');
+	
+	res.send('Olá o microservico Agendamento esta Online em /');
+});
+
+app.get('/:id', async (req, res) => {
+	res.send('ACESSOU GET ID PADRAO');
+	//const retorno = agend.find(c => c.id === parseInt(req.params.id));
+	//if(!retorno) res.status(404).send('Nao existe na lista com o ID especificado');
+	//res.send(retorno);
 });
 
 //Lista todos os Agendamentos Marcados
-app.get('/braga/agendamentos', (req, res) => {
-	Agendamento.find().then( (agendamentos) => {
-		res.json(agendamentos);
-	});
+app.get('/braga/agendamento/todos', (req, res) => {
+	const agendamentos = agend.map(c => c);
+	res.json(agendamentos);
+	
 });
 
 //Escolhe Aquele Elemento entre os Agendamentos Marcados
 app.get('/braga/agendamento/:id', (req, res) => {
-	
-	Agendamento.findById(req.params.id).then( (agendamento) => {
-		if(!agendamento) res.send('Nao existe na lista com o ID especificado');
-		res.json(agendamento);
-	});
+	const retorno = agend.find(c => c.id === parseInt(req.params.id));
+	//Agendamento.findById(req.params.id).then( (agendamento) => {
+	if(!agendamento) res.send('Nao existe na lista com o ID especificado');
+	res.json(agendamento);
+	//});
 });
 
-//Para DELETAR Agendamento.findbyIdAndRemove(req.params.id).then();
+//Escolhe Aquele Elemento entre os Agendamentos Marcados
+app.get('/porto/agendamento/:id', (req, res) => {
+	const retorno = agend.find(c => c.id === parseInt(req.params.id));
+
+	if(!agendamento) res.send('Nao existe na lista com o ID especificado');
+	res.json(agendamento);
+
+});
 
 //Cria um novo agendamento por POST
 app.post('/braga/agendamento/:id', (req, res) => {
@@ -93,7 +102,7 @@ app.post('/braga/agendamento/:id', (req, res) => {
 	//const salvo = agendar.save();
 	//console.log('Agendamento novo salvo no BD');
 	agend.push(novo);
-	console.log('Agendamento novo salvo na Lista');
+	console.log("Agendamento novo salvo na Lista");
 		
 	publisher.publish("agendamento:braga",JSON.stringify(novo))
 	//console.log("Publicou no Redis Pub/Sub- agendamento:braga");
@@ -130,9 +139,9 @@ app.post('/porto/agendamento/:id', (req, res) => {
 	//const salvo = agendar.save();
 	//console.log('Agendamento novo salvo no BD');
 	agend.push(novo);
-	console.log('Agendamento novo salvo na Lista');
+	console.log("Agendamento novo salvo na Lista");
 		
-	publisher.publish("agendamento:porto",JSON.stringify(novo))
+	publisher.publish("agendamento:porto",JSON.stringify(novo));
 	//console.log("Publicou no Redis Pub/Sub- agendamento:porto");
 	res.send(salvo);
 	
@@ -141,4 +150,6 @@ app.post('/porto/agendamento/:id', (req, res) => {
 //Microservico Agendamento Default 30123
 const port = process.env.PORT || 30123
 
-app.listen(port, () => console.log('Agendamentos na porta %s!', port));
+app.listen(port, () => {
+  console.log(`Agendamento na porta ${port}`)
+});

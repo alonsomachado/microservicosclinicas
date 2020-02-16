@@ -1,10 +1,6 @@
 <h1>Pagamento</h1>
 {{#if error}} <span>{{error}}</span>{{/if}}
-<form method="POST" action="/api/porto/pagamento/">
-  <div class="form-group">
-    <label>ID</label>
-    <input type="text" name="horarioInicio" class="form-control" placeholder="Horario de Inicio da Consulta">
-  </div>
+<form method="POST" action="/api/pagamento/">
   <div class="form-group">
     <label>Nome Completo</label>
     <input type="text" name="nome" class="form-control" placeholder="Preencher com o seu nome">

@@ -1,10 +1,6 @@
-<h1>Realiza</h1>
+<h1>Check-in do Utente</h1>
 {{#if error}} <span>{{error}}</span>{{/if}}
-<form method="POST" action="/api/braga/realizar/">
-  <div class="form-group">
-    <label>ID</label>
-    <input type="text" name="id" class="form-control" placeholder="ID">
-  </div>
+<form method="POST" action="/api/checkin/">
   <div class="form-group">
     <label>ID Agendamento</label>
     <input type="text" name="idgendamento" class="form-control" placeholder="Nome">

@@ -51,17 +51,38 @@ app.post('/user/search', function(req, res, next){
   });
 });
 
-app.get('/braga/pagamento', function(req, res, next){
-  res.render('addpagamentob');
+app.get('/user/todos', function(req, res, next){
+ 
+
+  client.hgetall('user', function(err, obj){
+	res.render('listdetails', {
+        user: obj
+    });
+	/*
+    if(!obj){
+      res.render('searchusers', {
+        error: 'Nenhum Usuario encontrado'
+      });
+    } else {
+      res.render('listdetails', {
+        user: obj
+      });
+    }
+	*/
+  });
 });
 
-app.post('/braga/pagamento', function(req, response, next){
+app.get('/pagamento', function(req, res, next){
+  res.render('addpagamento');
+});
+
+app.post('/pagamento', function(req, response, next){
 	
 	/*app.post("/api/braga/pagamento", function(req, res);*/
 	
 	var options = {
         method: 'POST',
-        url: '/api/braga/pagamento',
+        url: '/api/pagamento',
     }
     request(options, function(err, response, body) {
         if (err) {
@@ -73,27 +94,12 @@ app.post('/braga/pagamento', function(req, response, next){
 	res.redirect('/api/braga/pagamento');
 });
 
-app.get('/porto/pagamento', function(req, res, next){
-  res.render('addpagamentop');
+
+app.get('/agendamento', function(req, res, next){
+  res.render('addagendamento');
 });
 
-app.post('/porto/pagamento', function(req, res, next){
-	
-		
-	/*app.post("/api/porto/pagamento", function (req, res) => {
-	
-		res.redirect('/porto/pagamento');
-	}*/
-	
-	
-	res.redirect('/api/porto/pagamento');
-});
-
-app.get('/porto/agendamento', function(req, res, next){
-  res.render('addagendamentop');
-});
-
-app.post('/porto/agendamento', function(req, res, next){
+app.post('/agendamento', function(req, res, next){
 	
 	/*axios.post("/api/porto/agendamento", {
 		  
@@ -108,30 +114,12 @@ app.post('/porto/agendamento', function(req, res, next){
 	res.redirect('/');
 });
 
-app.get('/braga/agendamento', function(req, res, next){
-  res.render('addagendamentob');
+
+app.get('/checkin', function(req, res, next){
+  res.render('addrealiza');
 });
 
-app.post('/braga/agendamento', function(req, res, next){
-	
-	/*axios.post("/api/braga/agendamento", {
-		  
-		horarioInicio = req.body.horarioInicio,
-		horarioTermino = req.body.horarioTermino,
-		dia = req.body.dia,
-		nome = req.body.nome,
-		email  = req.body.email,
-		medico  = req.body.medico
-	})*/
-	
-	res.redirect('/');
-});
-
-app.get('/porto/realizar', function(req, res, next){
-  res.render('addagendamentop');
-});
-
-app.post('/porto/realizar', function(req, res, next){
+app.post('/checkin', function(req, res, next){
 	
   
 	/*axios.post("/api/porto/realizar", {
@@ -145,34 +133,6 @@ app.post('/porto/realizar', function(req, res, next){
 	res.redirect('/');
 });
 
-
-app.get('/braga/realizar', function(req, res, next){
-  res.render('addagendamentob');
-});
-
-app.post('/braga/realizar', function(req, res, next){
-	
-  
-	/*axios.post("/api/braga/realizar", {
-		  
-		idagendamento = req.body.idagendamento,
-		notafiscal = req.body.notafiscal,
-		valor = req.body.valor
-		
-	})*/
-	
-	res.redirect('/');
-});
-
-
-
-app.get('/braga', function(req, res, next){
-  res.render('braga');
-});
-
-app.get('/porto', function(req, res, next){
-  res.render('porto');
-});
 
 app.get('/user/add', function(req, res, next){
   res.render('adduser');

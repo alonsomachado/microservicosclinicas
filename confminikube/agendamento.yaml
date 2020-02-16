@@ -3,14 +3,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    run: pagamentobraga
-  name: pagamentobraga
+    run: agendamento
+  name: agendamento
   namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: pagamentobraga
+      run: agendamento
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -19,12 +19,12 @@ spec:
   template:
     metadata:
       labels:
-        run: pagamentobraga
+        run: agendamento
     spec:
       containers:
-      - image: micro-pagamento:v1
+      - image: micro-agendamento:v1
         imagePullPolicy: IfNotPresent
-        name: pagamentobraga
+        name: agendamento
         ports:
         - containerPort: 30123
           protocol: TCP
@@ -37,8 +37,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    run: pagamentobraga
-  name: pagamentobraga
+    run: agendamento
+  name: agendamento
   namespace: default
 spec:
   ports:
@@ -46,6 +46,6 @@ spec:
     protocol: TCP
     targetPort: 30123
   selector:
-    run: pagamentobraga
+    run: agendamento
   sessionAffinity: None
   type: ClusterIP

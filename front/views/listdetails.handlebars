@@ -1,3 +1,4 @@
+<!-- /*
 <h1>{{user.first_name}} {{user.last_name}} [{{user.id}}]</h1>
 <ul class="list-group">
   <li class="list-group-item"><strong>Email: </strong>{{user.email}}</li>
@@ -5,11 +6,16 @@
 </ul>
 
 <div class="btn-group">
-	
 	<a class="btn btn-default pull-left" href="/">Voltar</a>
 	
 	<form method="POST" action="/user/delete/{{user.id}}?_method=DELETE">
 	  <input type="submit" class="btn btn-danger pull-right" value="Delete">
 	</form>
+</div> */ -->
+
+<div>
+{{#each this}}
+  Teste : {{user.first_name}}<br>
+{{/each}}
 </div>
 

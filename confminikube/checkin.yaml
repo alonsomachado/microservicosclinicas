@@ -3,14 +3,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    run: agendamentobraga
-  name: agendamentobraga
+    run: checkin
+  name: checkin
   namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: agendamentobraga
+      run: checkin
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -19,12 +19,12 @@ spec:
   template:
     metadata:
       labels:
-        run: agendamentobraga
+        run: checkin
     spec:
       containers:
-      - image: micro-agendamento:v1
+      - image: micro-checkin:v1
         imagePullPolicy: IfNotPresent
-        name: agendamentobraga
+        name: checkin
         ports:
         - containerPort: 30123
           protocol: TCP
@@ -37,8 +37,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    run: agendamentobraga
-  name: agendamentobraga
+    run: checkin
+  name: checkin
   namespace: default
 spec:
   ports:
@@ -46,6 +46,6 @@ spec:
     protocol: TCP
     targetPort: 30123
   selector:
-    run: agendamentobraga
+    run: checkin
   sessionAffinity: None
   type: ClusterIP

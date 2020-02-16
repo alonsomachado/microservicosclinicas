@@ -4,12 +4,9 @@ const redis = require('redis');
 
 const subscriber = redis.createClient(6379, "pubsub.redis.default.svc.cluster.local");
 
-let clientporto = redis.createClient(6379, "cadpagporto.rediscadpagporto.default.svc.cluster.local");
-let clientbraga = redis.createClient(6379, "cadpagbraga.rediscadpagbraga.default.svc.cluster.local");
+let clientpag = redis.createClient(6379, "cadpag.rediscadpag.default.svc.cluster.local");
 
 app.use(express.json());
-
-
 
 //Microservico Pagamento (30123)
 const port = process.env.PORT || 30123
@@ -38,8 +35,7 @@ subscriber.on('message',(channel,message) => {
 	}
 })
 
-subscriber.subscribe("realiza:braga");
-subscriber.subscribe("realiza:porto");
+subscriber.subscribe("checkin");
 
 app.get('/', async (req, res) => {
 	
@@ -47,42 +43,28 @@ app.get('/', async (req, res) => {
 });
 
 //Verifica se esta salvando o que recebeu do Message Broker PUBSUB em memoria para processar
-app.get('/api/braga/pagamento/notas', async (req, res) => {
-	//res.send('Olá o microservico Pagamento esta Online em /braga/pagamento SEM  O /');
+app.get('/api/pagamento/notas', async (req, res) => {
+
 	const retorno = notas.map(c => c);
 	if(!retorno) res.status(404).send('Nao existe na lista com o ID especificado');
 	res.send(retorno);
 });
 
-app.get('/api/braga/pagamento', async (req, res) => {
-	//res.send('Olá o microservico Pagamento esta Online em /braga/pagamento SEM  O /');
+app.get('/api/pagamento/lista', async (req, res) => {
+
 	const retorno = pagamento.map(c => c);
-	if(!retorno) res.status(404).send('Nao existe na lista com o ID especificado');
+	if(!retorno) res.status(404).send('Nao existe Pagamentos na lista');
 	res.send(retorno);
 });
 
-app.get('/api/porto/pagamento', async (req, res) => {
-	//res.send('Olá o microservico Pagamento esta Online em /braga/pagamento SEM  O /');
-	const retorno = pagamento.map(c => c);
-	if(!retorno) res.status(404).send('Nao existe na lista com o ID especificado');
-	res.send(retorno);
-});
-
-app.get('/api/braga/pagamento/:id', async (req, res) => {
+app.get('/api/pagamento/:id', async (req, res) => {
 	
 	const retorno = pagamento.find(c => c.id === parseInt(req.params.id));
 	if(!retorno) res.status(404).send('Nao existe na lista com o ID especificado');
 	res.send(retorno);
 });
 
-app.get('/api/porto/pagamento/:id', async (req, res) => {
-	
-	const retorno = pagamento.find(c => c.id === parseInt(req.params.id));
-	if(!retorno) res.status(404).send('Nao existe na lista com o ID especificado');
-	res.send(retorno);
-});
-
-app.post('/api/braga/pagamento/', async (req, res) => {
+app.post('/api/pagamento/', async (req, res) => {
 	
 	const novo = {
 		id: pagamento.length + 1,
@@ -94,20 +76,6 @@ app.post('/api/braga/pagamento/', async (req, res) => {
 	pagamento.push(novo);
 	res.send(novo);
 });
-
-app.post('/api/porto/pagamento/', async (req, res) => {
-	
-	const novo = {
-		id: pagamento.length + 1,
-		name: req.body.name,
-		nif: req.body.nif,
-		pagamento: req.body.pagamento
-	}
-	console.log(novo);
-	pagamento.push(novo);
-	res.send(novo);
-});
-
 
 app.listen(port, () => {
   console.log(`Pagamento na porta ${port}`)

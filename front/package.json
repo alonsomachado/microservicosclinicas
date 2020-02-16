@@ -1,12 +1,12 @@
 {
-  "name": "redusers",
+  "name": "front",
   "version": "1.0.0",
-  "description": "Simple user management app",
+  "description": "Front End com Express Handlebars",
   "main": "app.js",
   "scripts": {
     "start": "node app"
   },
-  "author": "Brad Traversy",
+  "author": "Alonso Machado - ESTG MTDS",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.17.1",

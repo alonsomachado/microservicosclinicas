@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: rediscadpagbraga
+  name: rediscadagen
 spec:
   selector:
-    name: rediscadpagbraga
+    name: rediscadagen
   ports:
   - protocol: TCP
     port: 6379
@@ -12,25 +12,25 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rediscadpagbraga
+  name: rediscadagen
   labels:
-    name: rediscadpagbraga
+    name: rediscadagen
   namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: rediscadpagbraga
+      app: rediscadagen
   template:
     metadata:
       labels:
-        app: rediscadpagbraga
-        name: rediscadpagbraga
+        app: rediscadagen
+        name: rediscadagen
     spec:
-      hostname: cadpagbraga
-      subdomain: rediscadpagbraga
+      hostname: cadagen
+      subdomain: rediscadagen
       containers:
-      - name: rediscadpagbraga
+      - name: rediscadagen
         image: redis:4
         args: ["--appendonly", "yes", "--save", "900", "1", "--save", "30", "1"]
         tty: true
@@ -38,28 +38,28 @@ spec:
         ports:
         - containerPort: 6379
         volumeMounts:
-        - mountPath: /data/rediscadpagbraga
-          name: rediscadpagbraga-volume
+        - mountPath: /data/rediscadagen
+          name: rediscadagen-volume
       volumes:
-      - name: rediscadpagbraga-volume
+      - name: rediscadagen-volume
         emptyDir: {}
 ---
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  name: rediscadpagbraga-volume
+  name: rediscadagen-volume
 spec:
   capacity:
     storage: 1Gi
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/mnt/data/rediscadpagbraga"
+    path: "/mnt/data/rediscadagen"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: rediscadpagbraga-volume-claim
+  name: rediscadagen-volume-claim
 spec:
   accessModes:
     - ReadWriteOnce

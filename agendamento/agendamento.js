@@ -4,8 +4,7 @@ const redis = require('redis');
 
 const publisher = redis.createClient(6379, "pubsub.redis.default.svc.cluster.local");
 
-let clientporto = redis.createClient(6379, "cadagenporto.rediscadagenporto.default.svc.cluster.local");
-let clientbraga = redis.createClient(6379, "cadagenbraga.rediscadagenbraga.default.svc.cluster.local");
+let clientagen = redis.createClient(6379, "cadagen.rediscadagen.default.svc.cluster.local");
 
 app.use(express.json());
 
@@ -28,70 +27,80 @@ const medico =  [
 { id: 5, nome: 'Joana Guedes Dutra', email: 'joanagd@gmail.com', especialidade: 'Oftamologista'}
 ];
 
-app.get('/api/braga/pagamentos', async (req, res) => {
+app.get('/api/agendamento/lista', async (req, res) => {
 	//res.send('Olá o microservico Pagamento esta Online em /braga/pagamento SEM  O /');
 	const retorno = agend.map(c => c);
-	if(!retorno) res.status(404).send('Nao existe na lista com o ID especificado');
+	if(!retorno) res.status(404).send('Nao existe Agendamento na lista');
 	res.send(retorno);
 });
 
 
-app.get('/api/porto/pagamentos', async (req, res) => {
-	//res.send('Olá o microservico Pagamento esta Online em /braga/pagamento SEM  O /');
-	const retorno = agend.map(c => c);
-	if(!retorno) res.status(404).send('Nao existe na lista com o ID especificado');
-	res.send(retorno);
-});
-
-app.get('/api/braga/agendamento/:id', async (req, res) => {
+app.get('/api/agendamento/:id', async (req, res) => {
 	
 	const retorno = agend.find(c => c.id === parseInt(req.params.id));
 	if(!retorno) res.status(404).send('Nao existe na lista com o ID especificado');
 	res.send(retorno);
 });
 
-app.get('/api/porto/agendamento/:id', async (req, res) => {
+app.get('/api/agendamento/db/:id', async (req, res) => {
 	
-	const retorno = agend.find(c => c.id === parseInt(req.params.id));
-	if(!retorno) res.status(404).send('Nao existe na lista com o ID especificado');
-	res.send(retorno);
+	//const retorno = agend.find(c => c.id === parseInt(req.params.id));
+	//if(!retorno) res.status(404).send('Nao existe na lista com o ID especificado');
+	//res.send(retorno);
+
+	let id = req.params.id;
+
+	client.hgetall(id, function(err, obj){
+		if(!obj){
+		  res.send(err);
+		} else {
+		  obj.id = id;
+		  res.send(obj);
+		}
+	});
 });
 
-app.post('/api/braga/agendamento/', (req, res) => {
+app.post('/api/agendamento/', (req, res) => {
+	
+	let id = agend.length + 1;
+	let horarioInicio = req.body.horarioInicio;
+	let horarioTermino = req.body.horarioTermino;
+	let dia = req.body.dia;
+	let nome = req.body.nome;
+	let email = req.body.email;
+	let medico = req.body.medico;
 	
 	const novo = {
-		horarioInicio: req.body.horarioInicio,
-		horarioTermino: req.body.horarioTermino,
-		dia: req.body.dia,
-		nome: req.body.nome,
-		email: req.body.email,
-		medico: req.body.medico
+		id: id,
+		horarioInicio: horarioInicio,
+		horarioTermino: horarioTermino,
+		dia: dia,
+		nome: nome,
+		email: email,
+		medico: medico
 	}
+	
+	clientagen.hmset(id, [
+    'horarioInicio', horarioInicio,
+    'horarioTermino', horarioTermino,
+	'dia',dia,
+	'nome',nome,
+    'email', email,
+    'medico', medico
+	], function(err, reply){
+    if(err){
+      console.log(err);
+    }
+    console.log(reply);
+    //res.redirect('/');
+	});
 	
 	console.log(novo);
 	agend.push(novo);
-	publisher.publish("agendamento:braga",JSON.stringify(novo));
-	console.log("Publicou no Redis Pub/Sub - agendamento:braga");
+	publisher.publish("agendamento",JSON.stringify(novo));
+	console.log("Publicou no Redis Pub/Sub - agendamento");
 	res.send(novo);
 });
-
-app.post('/api/porto/pagamento/', async (req, res) => {
-	
-	const novo = {
-		horarioInicio: req.body.horarioInicio,
-		horarioTermino: req.body.horarioTermino,
-		dia: req.body.dia,
-		nome: req.body.nome,
-		email: req.body.email,
-		medico: req.body.medico
-	}
-	console.log(novo);
-	agend.push(novo);
-	publisher.publish("agendamento:porto",JSON.stringify(novo));
-	console.log("Publicou no Redis Pub/Sub - agendamento:porto");
-	res.send(novo);
-});
-
 
 app.listen(port, () => {
   console.log(`Agendamento na porta ${port}`)

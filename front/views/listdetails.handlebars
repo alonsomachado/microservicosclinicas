@@ -15,7 +15,10 @@
 
 <div>
 {{#each this}}
-  Teste : {{user.first_name}}<br>
+  This : {{@key}} {{@value}} + {{user.first_name}}<br>
+  {{#each user}}
+	User : {{@key}} {{@value}} + {{user.first_name}}<br>
+  {{/each}}
 {{/each}}
 </div>
 

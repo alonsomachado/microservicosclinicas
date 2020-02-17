@@ -54,7 +54,9 @@ app.post('/user/search', function(req, res, next){
 app.get('/user/todos', function(req, res, next){
  
 
-  client.hgetall('user', function(err, obj){
+  //let pong = client.keys('*');
+  //res.render('listdetails', {   pong
+  client.hgetall('*', function(err, obj){
 	res.render('listdetails', {
         user: obj
     });
@@ -78,7 +80,7 @@ app.get('/pagamento', function(req, res, next){
 
 app.post('/pagamento', function(req, response, next){
 	
-	/*app.post("/api/braga/pagamento", function(req, res);*/
+	/*app.post("/api/pagamento", function(req, res);*/
 	
 	var options = {
         method: 'POST',
@@ -91,7 +93,7 @@ app.post('/pagamento', function(req, response, next){
         res.send(body); // send whatever you want here
     });
 	
-	res.redirect('/api/braga/pagamento');
+	res.redirect('/api/pagamento');
 });
 
 
@@ -116,13 +118,32 @@ app.post('/agendamento', function(req, res, next){
 
 
 app.get('/checkin', function(req, res, next){
-  res.render('addrealiza');
+	
+	//res.render('addcheckin');
+	
+	axios
+	.get("https://randomuser.me/api/?results=5")
+    .then(response =>
+      response.data.results.map(user => ({
+        name: `${user.name.first} ${user.name.last}`,
+        username: `${user.login.username}`,
+        email: `${user.email}`,
+        image: `${user.picture.thumbnail}`
+      }))
+    )
+    .then(users => {    
+	console.log(users);
+	res.render('addcheckin', { users } ); 
+	})
+    .catch(error => this.setState({ error, isLoading: false }));
+    
+         
 });
 
 app.post('/checkin', function(req, res, next){
 	
   
-	/*axios.post("/api/porto/realizar", {
+	/*axios.post("/api/checkin", {
 		  
 		idagendamento = req.body.idagendamento,
 		notafiscal = req.body.notafiscal,

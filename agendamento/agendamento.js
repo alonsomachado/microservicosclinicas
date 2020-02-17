@@ -13,18 +13,17 @@ const port = process.env.PORT || 30123
 
 const agend =  [
 
-{ id: 1, horarioInicio: '08:00', horarioTermino: '08:55', dia: '14/01/2020', nome: 'Teste1', email: 'joao@gmail.com', medico: 'Joao Pedro Cunha'},
-{ id: 2, horarioInicio: '09:00', horarioTermino: '09:55', dia: '14/01/2020', nome: 'Teste2', email: 'joao@gmail.com', medico: 'Joao Pedro Cunha'},
-{ id: 3, horarioInicio: '08:00', horarioTermino: '08:55', dia: '16/01/2020', nome: 'Teste3', email: 'joao@gmail.com', medico: 'Paula Tavares Guimaraes'},
+{ id: 0, horarioInicio: '08:00', horarioTermino: '08:55', dia: '14/01/2020', nome: 'Teste1', email: 'joao@gmail.com', medico: 'Joao Pedro Cunha'},
+{ id: 1, horarioInicio: '08:00', horarioTermino: '08:55', dia: '16/01/2020', nome: 'Teste3', email: 'joao@gmail.com', medico: 'Paula Tavares Guimaraes'},
 
 ];
 
 const medico =  [
-{ id: 1, nome: 'Joao Pedro Cunha', email: 'joaopc@gmail.com', especialidade: 'Pediatra'},
-{ id: 2, nome: 'Manoel de Sa Carvalhal', email: 'manoelsc@gmail.com', especialidade: 'Clinico Geral'},
-{ id: 3, nome: 'Pedro Afonso Melo Campos', email: 'pedroafm@gmail.com', especialidade: 'Oftamologista'},
-{ id: 4, nome: 'Paula Tavares Guimaraes', email: 'paulatg@gmail.com', especialidade: 'Pediatra'},
-{ id: 5, nome: 'Joana Guedes Dutra', email: 'joanagd@gmail.com', especialidade: 'Oftamologista'}
+{ id: 1, nome: 'Joao Pedro Cunha', email: 'joaopc@gmail.com', manha: 'True', tarde: 'True', especialidade: 'Pediatra'},
+{ id: 2, nome: 'Manoel de Sa Carvalhal', email: 'manoelsc@gmail.com', manha: 'True', tarde: 'True', especialidade: 'Clinico Geral'},
+{ id: 3, nome: 'Pedro Afonso Melo Campos', email: 'pedroafm@gmail.com', manha: 'True', tarde: 'True', especialidade: 'Oftamologista'},
+{ id: 4, nome: 'Paula Tavares Guimaraes', email: 'paulatg@gmail.com', manha: 'False', tarde: 'True', especialidade: 'Pediatra'},
+{ id: 5, nome: 'Joana Guedes Dutra', email: 'joanagd@gmail.com', manha: 'True', tarde: 'False', especialidade: 'Oftamologista'}
 ];
 
 app.get('/api/agendamento/lista', async (req, res) => {

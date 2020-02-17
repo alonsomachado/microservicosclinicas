@@ -12,13 +12,13 @@ app.use(express.json());
 const port = process.env.PORT || 30123
 
 const pagamento =  [
-{ id: 1, name: 'Teste1', nif: '123123', pagamento: 20},
-{ id: 2, name: 'Teste2', nif: '1451234', pagamento: 15},
+{ id: 0, name: 'Teste', nif: '123123', pagamento: 20},
+
 ];
 
 const notas =   [
-{ id: 1, name: 'Teste1', email: 'joao@gmail.com', valor: 20},
-{ id: 2, name: 'Teste2', email: 'elll2@gmail.com', valor: 15},
+{ id: 0, idagendamento: 1, name: 'Teste', utente: '111000222', valor: 20},
+
 ];
 
 //Recebeu Mensagem do Redis (Publisher/Subscribe)
@@ -26,8 +26,8 @@ subscriber.on('message',(channel,message) => {
     //console.log('Recebeu dados'+ channel +":"+message);
 	try {
 	  var nota = JSON.parse(message); 
-	  var cidade = channel.substring(8);
-	  console.log(cidade); //Aparecer objeto json
+	  //var cidade = channel.substring(8);
+	  //console.log(cidade); //Aparecer objeto json
 	  console.log(nota);
 	  notas.push(nota);
 	} catch (ex) {
@@ -43,7 +43,7 @@ app.get('/', async (req, res) => {
 });
 
 //Verifica se esta salvando o que recebeu do Message Broker PUBSUB em memoria para processar
-app.get('/api/pagamento/notas', async (req, res) => {
+app.get('/api/pagamento/checkin', async (req, res) => {
 
 	const retorno = notas.map(c => c);
 	if(!retorno) res.status(404).send('Nao existe na lista com o ID especificado');

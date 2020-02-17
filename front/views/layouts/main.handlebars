@@ -17,20 +17,22 @@
         <ul class="nav nav-tabs">
 			  
 			<li class="nav-item">
-				<a class="nav-link" data-toggle="tab" href="/user/add">Cadastrar Usuario</a>
+				<a class="nav-link" data-toggle="tab" href="/user/add">Cadastrar Cliente</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" data-toggle="tab" href="/agendamento/">Agendamento</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" data-toggle="tab" href="/checkin/">CheckIn</a>
+				<a {{#if loggedIn}} class="nav-link" disabled  {{else}} class="nav-link disabled" {{/if}} data-toggle="tab" href="/checkin/">CheckIn</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" data-toggle="tab" href="/pagamento/">Pagamento</a>
+				<a {{#if loggedIn}} class="nav-link" disabled  {{else}} class="nav-link disabled" {{/if}} data-toggle="tab" href="/pagamento/">Pagamento</a>
 			</li>
+			{{#if loggedIn}}
 			<li class="nav-item">
-				<a class="nav-link disabled" data-toggle="tab" href="/medico">Cadastrar Medico</a>
+				<a class="nav-link disabled" data-toggle="tab" href="/">Cadastrar Medico</a>
 			</li>
+			{{/if}}
 			  
 			  
 		</ul>

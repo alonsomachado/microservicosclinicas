@@ -5,7 +5,9 @@ const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const redis = require('redis');
 const axios = require('axios');
-const request = require('request');   
+const request = require('request'); 
+
+let logado = false;  
 
 // Create Redis Client
 let client = redis.createClient(6379, "caduser.rediscaduser.default.svc.cluster.local");
@@ -29,8 +31,30 @@ app.use(bodyParser.urlencoded({extended:false}));
 // methodOverride para funcionar o DELETE
 app.use(methodOverride('_method'));
 
+function checkIfLoggedIn(req,res,next) {
+	next();
+	return;
+	//req.session.loggedin = false;
+	/*var sessionId = req.cookies.session;
+	//Cria Cookie de Sessao com variavel LoggedIn
+	if (!sessionId || sessionId.search(/^[A-Fa-f0-9]+$/) == -1) {
+		res.locals.loggedIn = false;
+		next();
+		return;
+	}   */
+	
+};
+app.use(checkIfLoggedIn);
+
 // Search Page
 app.get('/', function(req, res, next){
+  res.render('searchusers');
+});
+
+app.get('/logar', function(req, res, next){
+	logado = true;
+	//req.session.loggedin = true;
+	//res.locals.loggedIn = true;
   res.render('searchusers');
 });
 
@@ -98,7 +122,8 @@ app.post('/pagamento', function(req, response, next){
 
 
 app.get('/agendamento', function(req, res, next){
-  res.render('addagendamento');
+	var datahj = Date();
+  res.render('addagendamento', { datahj  });
 });
 
 app.post('/agendamento', function(req, res, next){

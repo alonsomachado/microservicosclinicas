@@ -1,17 +1,21 @@
 <h1>Pagamento</h1>
 {{#if error}} <span>{{error}}</span>{{/if}}
 <form method="POST" action="/api/pagamento/">
+	<div class="form-group">
+    <label>ID Atendimento</label>
+    <input type="number" name="idatendimento" class="form-control" placeholder="Preencher com o ID Atendimento CASO EXISTA">
+  </div>
   <div class="form-group">
     <label>Nome Completo</label>
-    <input type="text" name="nome" class="form-control" placeholder="Preencher com o seu nome">
+    <input type="text" name="nome" class="form-control" placeholder="Preencher com o seu nome" required>
   </div>
   <div class="form-group">
     <label>NIF</label>
-    <input type="text" name="email" class="form-control" placeholder="Preencher com o seu Email">
+    <input type="number" name="nif" class="form-control" placeholder="Preencher com o NIF do Utente">
   </div>
   <div class="form-group">
     <label>Valor a ser Pago</label>
-    <input type="text" name="medico" class="form-control" placeholder="Preencher com o valor pago">
+    <input type="number" name="valor" class="form-control" placeholder="Preencher com o valor pago" required>
   </div>
   <input type="submit" class="btn btn-primary" value="Salvar">
 </form>

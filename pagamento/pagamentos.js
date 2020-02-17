@@ -12,12 +12,12 @@ app.use(express.json());
 const port = process.env.PORT || 30123
 
 const pagamento =  [
-{ id: 0, name: 'Teste', nif: '123123', pagamento: 20},
+{ id: 0, idatendimento: 0, name: 'Teste', nif: '123123', pagamento: 20},
 
 ];
 
-const notas =   [
-{ id: 0, idagendamento: 1, name: 'Teste', utente: '111000222', valor: 20},
+const notafiscal =   [
+{ id: 0, idagendamento: 0, name: 'Teste', utente: '111000222', valor: 20},
 
 ];
 
@@ -29,7 +29,7 @@ subscriber.on('message',(channel,message) => {
 	  //var cidade = channel.substring(8);
 	  //console.log(cidade); //Aparecer objeto json
 	  console.log(nota);
-	  notas.push(nota);
+	  notafiscal.push(nota);
 	} catch (ex) {
 	  console.error(ex);
 	}
@@ -45,7 +45,7 @@ app.get('/', async (req, res) => {
 //Verifica se esta salvando o que recebeu do Message Broker PUBSUB em memoria para processar
 app.get('/api/pagamento/checkin', async (req, res) => {
 
-	const retorno = notas.map(c => c);
+	const retorno = notafiscal.map(c => c);
 	if(!retorno) res.status(404).send('Nao existe na lista com o ID especificado');
 	res.send(retorno);
 });

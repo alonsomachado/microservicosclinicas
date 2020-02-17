@@ -65,7 +65,8 @@ app.post('/api/checkin/', async (req, res) => {
 	const novo = {
 		id: lista.length + 1,
 		idagendamento: req.body.idagendamento,
-		notafiscal: req.body.notafiscal,
+		name: req.body.name,
+		utente: req.body.utente,
 		valor: req.body.valor
 	}
 	lista.push(novo);

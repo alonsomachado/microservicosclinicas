@@ -2,38 +2,62 @@
 {{#if error}} <span>{{error}}</span>{{/if}}
 <form method="POST" action="/api/agendamento/">
   <div class="form-group">
-      <label for="exampleSelect1">Escolha a Cidade</label>
+      <label for="selectCidade">Escolha a Cidade</label>
       <select class="form-control" id="selectCidade">
-        <option>Porto</option>
-        <option>Braga</option>
-        <option>Guimaraes</option>
-        <option>Lisboa</option>
+        <option value="Porto">Porto</option>
+        <option value="Braga">Braga</option>
+        <option value="Guimaraes">Guimaraes</option>
+        <option value="Lisboa">Lisboa</option>
       </select>
   </div>
-  <div id="calendar"></div>
+  <div class="form-group">
+      <label for="selectMedico">Escolha o seu Médico</label>
+      <select class="form-control" id="selectMedico">
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="D">D</option>
+	  </select>
+  </div>
+  <div id="horario">
+	  <div class="form-group">
+		  <label for="selectHorario">Escolha o Horario</label>
+		  <select class="form-control" id="selectHorario">
+			<option value="08:00 as 08:45">08:00 as 08:45</option>
+			<option value="08:45 as 09:30">08:45 as 09:30</option>
+			<option value="09:30 as 10:15">09:30 as 10:15</option>
+			<option value="10:15 as 11:00">10:15 as 11:00</option>
+			<option value="13:30 as 14:15">13:30 as 14:15</option>
+			<option value="14:15 as 15:00">14:15 as 15:00</option>
+			<option value="15:00 as 15:45">15:00 as 15:45</option>
+			<option value="15:45 as 16:30">15:45 as 16:30</option>
+			<option value="16:30 as 17:15">16:30 as 17:15</option>
+		  </select>
+	  </div>
+  </div>
+  <div class="form-group">
+    <label>Medico</label>
+    <input type="text" name="medicoDig" class="form-control" placeholder="Preencher com o seu Médico">
+  </div>
   <div class="form-group">
     <label>Horario de Inicio</label>
-    <input type="text" name="horarioInicio" class="form-control" placeholder="Horario de Inicio da Consulta">
+    <input type="time" name="horarioInicioDig" class="form-control" placeholder="Horario de Inicio da Consulta">
   </div>
   <div class="form-group">
     <label>Horario de Termino</label>
-    <input type="text" name="horarioTermino" class="form-control" placeholder="Horario de Termino da Consulta">
+    <input type="time" name="horarioTerminoDig" class="form-control" placeholder="Horario de Termino da Consulta">
   </div>
   <div class="form-group">
     <label>Dia</label>
-    <input type="text" name="dia" class="form-control" placeholder="Dia pretendido">
+    <input type="date" name="dia" class="form-control" placeholder="Dia pretendido" {{#if datahj}} min="{{datahj}}" {{else}} min="2020-01-01" {{/if}} required>
   </div>
   <div class="form-group">
     <label>Nome Completo</label>
-    <input type="text" name="nome" class="form-control" placeholder="Preencher com o seu nome">
+    <input type="text" name="nome" class="form-control" placeholder="Preencher com o seu nome" required>
   </div>
   <div class="form-group">
     <label>Email</label>
     <input type="text" name="email" class="form-control" placeholder="Preencher com o seu Email">
-  </div>
-  <div class="form-group">
-    <label>Medico</label>
-    <input type="text" name="medico" class="form-control" placeholder="Preencher com o seu Médico">
   </div>
   <input type="submit" class="btn btn-primary" value="Salvar">
 </form>

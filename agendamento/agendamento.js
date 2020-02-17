@@ -37,20 +37,13 @@ app.get('/api/agendamento/lista', async (req, res) => {
 
 app.get('/api/agendamento/:id', async (req, res) => {
 	
-	const retorno = agend.find(c => c.id === parseInt(req.params.id));
-	if(!retorno) res.status(404).send('Nao existe na lista com o ID especificado');
-	res.send(retorno);
-});
-
-app.get('/api/agendamento/db/:id', async (req, res) => {
-	
 	//const retorno = agend.find(c => c.id === parseInt(req.params.id));
 	//if(!retorno) res.status(404).send('Nao existe na lista com o ID especificado');
 	//res.send(retorno);
-
+	
 	let id = req.params.id;
 
-	client.hgetall(id, function(err, obj){
+	clientagen.hgetall(id, function(err, obj){
 		if(!obj){
 		  res.send(err);
 		} else {

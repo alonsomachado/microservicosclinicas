@@ -17,6 +17,7 @@ const agend =  [
 { id: 0, horarioInicio: '00:00', horarioTermino: '00:55', dia: '14/02/2020', nome: 'Teste', email: 'a@gmail.com', medico: 'Joao Pedro Cunha'},
 
 ];
+
 const lista =  [
 { id: 1, idagendamento: 1, notafiscal: 731231, valor: 20},
 { id: 2, idagendamento: 2, notafiscal: 123123, valor: 20},
@@ -40,13 +41,6 @@ app.get('/api/checkin/vivo', async (req, res) => {
 	res.send('Olá o microservico Checkin esta Online em /checkin/');
 });
 
-app.get('/api/checkin/:id', async (req, res) => {
-	
-	const retorno = lista.find(c => c.id === parseInt(req.params.id));
-	if(!retorno) res.status(404).send('Nao existe na lista com o ID especificado');
-	res.send(retorno);
-});
-
 app.get('/api/checkin/lista', async (req, res) => {
 	const retorno = lista.map(c => c);
 	if(!retorno) res.status(404).send('Nao existe lista de Check-in');
@@ -56,6 +50,13 @@ app.get('/api/checkin/lista', async (req, res) => {
 app.get('/api/checkin/agendamentosrecebidos', async (req, res) => {
 	const retorno = agend.map(c => c);
 	if(!retorno) res.status(404).send('Nao existe Agendamentos recebidos por Check-in');
+	res.send(retorno);
+});
+
+app.get('/api/checkin/:id', async (req, res) => {
+	
+	const retorno = lista.find(c => c.id === parseInt(req.params.id));
+	if(!retorno) res.status(404).send('Nao existe na lista com o ID especificado');
 	res.send(retorno);
 });
 

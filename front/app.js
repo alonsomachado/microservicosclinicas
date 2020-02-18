@@ -121,12 +121,10 @@ app.get('/pagamento', function(req, res, next){
 
 app.post('/pagamento', function(req, response, next){
 	
-	/*app.post("/api/pagamento", function(req, res);*/
-	
 	let name = req.body.name;
 	let nif = req.body.nif;
 	let pagamento = req.body.pagamento;
-	let idatendimento = req.body.idatendimento;
+	let idatendimento = (req.body.idatendimento) ? req.body.idatendimento : "0" ;
 	
 	
 	axios

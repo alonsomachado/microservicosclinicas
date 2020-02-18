@@ -98,13 +98,23 @@ app.post('/user/search', function(req, res, next){
 app.get('/user/todos', function(req, res, next){
  
 
-  //let pong = client.keys('*');
+  /*client.keys('*', function(err, keys){
+	  
+	for(var i = 0, len = keys.length; i < len; i++) {
+		console.log(keys[i]);
+	}
+	res.render('listdetails', { users: keys,logado });
+	console.log("-- AQUI USER TODOS --");
+	console.log(obj);
+	});*/
   //res.render('listdetails', {   pong
   client.hgetall('*', function(err, obj){
 	res.render('listdetails', {
         user: obj,
 		logado
     });
+	console.log("-- AQUI USER TODOS --");
+	console.log(obj);
 	/*
     if(!obj){
       res.render('searchusers', {
@@ -114,8 +124,8 @@ app.get('/user/todos', function(req, res, next){
       res.render('listdetails', {
         user: obj
       });
-    }
-	*/
+    }*/
+	
   });
 });
 
@@ -228,7 +238,7 @@ app.get('/agendamentos/todos', function(req, res, next){
 
 	//http://192.168.99.111/api/agendamento/lista
 	axios
-	.get("/api/agendamento/lista")
+	.get("http://192.168.99.111/api/agendamento/lista")
     .then(response =>
       response.data.map(agend => ({
 		id: `${agend.id}`,

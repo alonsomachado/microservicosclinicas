@@ -34,6 +34,10 @@ app.use(methodOverride('_method'));
 
 //Cria Cookie de Sessao com variavel LoggedIn
 function checkIfLoggedIn(req,res,next) {
+	
+	/*if(logado = false){
+		res.redirect('/');
+	}*/
 	next();
 	return;
 	//Metodo 1
@@ -224,7 +228,7 @@ app.get('/agendamentos/todos', function(req, res, next){
 
 	//http://192.168.99.111/api/agendamento/lista
 	axios
-	.get("http://192.168.99.111/api/agendamento/lista")
+	.get("/api/agendamento/lista")
     .then(response =>
       response.data.map(agend => ({
 		id: `${agend.id}`,
@@ -239,6 +243,29 @@ app.get('/agendamentos/todos', function(req, res, next){
     .then(agends => {    
 	console.log(agends);
 	res.render('listdetails', { agends, logado } ); 
+	})
+    .catch(error => console.log(error) );
+    
+         
+});
+
+app.get('/checkin/todos', function(req, res, next){
+
+	//http://192.168.99.111/api/checkin/lista
+	axios
+	.get("http://192.168.99.111/api/checkin/lista")
+    .then(response =>
+      response.data.map(checkin => ({
+		id: `${checkin.id}`,
+		idagendamento: `${checkin.idagendamento}`,
+		name: `${checkin.name}`,
+		utente: `${checkin.utente}`,
+		valor: `${checkin.valor}`
+      }))
+    )
+    .then(checkins => {    
+	console.log(checkins);
+	res.render('listdetails', { checkins, logado } ); 
 	})
     .catch(error => console.log(error) );
     

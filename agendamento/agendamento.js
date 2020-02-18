@@ -26,6 +26,11 @@ const medico =  [
 { id: 5, nome: 'Joana Guedes Dutra', email: 'joanagd@gmail.com', manha: 'True', tarde: 'False', especialidade: 'Oftamologista'}
 ];
 
+app.get('/api/agendamento/vivo', async (req, res) => {
+	
+	res.send('Olá o microservico Agendamento esta Online em /api/agendamento');
+});
+
 app.get('/api/agendamento/lista', async (req, res) => {
 	//res.send('Olá o microservico Pagamento esta Online em /braga/pagamento SEM  O /');
 	const retorno = agend.map(c => c);
@@ -54,7 +59,7 @@ app.get('/api/agendamento/:id', async (req, res) => {
 
 app.post('/api/agendamento/', (req, res) => {
 	
-	let id = agend.length + 1;
+	let id = agend.length; //+ 1 ;
 	let horarioInicio = req.body.horarioInicio;
 	let horarioTermino = req.body.horarioTermino;
 	let dia = req.body.dia;

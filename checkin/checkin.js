@@ -38,7 +38,7 @@ subscriber.subscribe("agendamento");
 
 app.get('/api/checkin/vivo', async (req, res) => {
 	
-	res.send('Olá o microservico Checkin esta Online em /checkin/');
+	res.send('Olá o microservico Checkin esta Online em /api/checkin/');
 });
 
 app.get('/api/checkin/lista', async (req, res) => {
@@ -47,6 +47,7 @@ app.get('/api/checkin/lista', async (req, res) => {
 	res.send(retorno);
 });
 
+//Verifica se esta salvando o que recebeu do Message Broker PUBSUB em memoria para processar
 app.get('/api/checkin/agendamentosrecebidos', async (req, res) => {
 	const retorno = agend.map(c => c);
 	if(!retorno) res.status(404).send('Nao existe Agendamentos recebidos por Check-in');
@@ -55,22 +56,53 @@ app.get('/api/checkin/agendamentosrecebidos', async (req, res) => {
 
 app.get('/api/checkin/:id', async (req, res) => {
 	
-	const retorno = lista.find(c => c.id === parseInt(req.params.id));
-	if(!retorno) res.status(404).send('Nao existe na lista com o ID especificado');
-	res.send(retorno);
+	//const retorno = lista.find(c => c.id === parseInt(req.params.id));
+	//if(!retorno) res.status(404).send('Nao existe na lista com o ID especificado');
+	//res.send(retorno);
+	
+	let id = req.params.id;
+
+	clientcheckin.hgetall(id, function(err, obj){
+		if(!obj){
+		  res.send(err);
+		} else {
+		  obj.id = id;
+		  res.send(obj);
+		}
+	});
 });
 
-app.post('/api/checkin/', async (req, res) => {
+app.post('/api/checkin/', (req, res) => {
+	
+	let id = lista.length; //+ 1 ;
+	let idagendamento = (req.body.idagendamento) ? req.body.idagendamento : "0";
+	let name = req.body.name;
+	let utente = req.body.utente;
+	let valor = req.body.valor;
 	
 	const novo = {
-		id: lista.length + 1,
-		idagendamento: req.body.idagendamento,
-		name: req.body.name,
-		utente: req.body.utente,
-		valor: req.body.valor
+		id: id,
+		idagendamento: idagendamento,
+		name: name,
+		utente: utente,
+		valor: valor
 	}
+	
+	clientcheckin.hmset(id, [
+    'idagendamento', idagendamento,
+    'name', name,
+	'utente',utente,
+	'valor',valor
+	], function(err, reply){
+    if(err){
+      console.log(err);
+    }
+    console.log(reply);
+    //res.redirect('/');
+	});
+	console.log('Checkin salvo no REDIS');
 	lista.push(novo);
-	console.log('Realiza salvo na Lista');
+	console.log('Checkin salvo na Lista em memória');
 		
 	publisher.publish("checkin",JSON.stringify(novo));
 	console.log("Publicou no Redis Pub/Sub- checkin");

@@ -1,5 +1,7 @@
+<body id="agendamento" onload="preencheMedico()">
 <h1>Agendamento</h1>
 {{#if error}} <span>{{error}}</span>{{/if}}
+
 <form method="POST" action="/api/agendamento/">
   <div class="form-group">
       <label for="selectCidade">Escolha a Cidade</label>
@@ -13,39 +15,60 @@
   <div class="form-group">
       <label for="selectMedico">Escolha o seu Médico</label>
       <select class="form-control" id="selectMedico">
-        <option value="A">A</option>
-        <option value="B">B</option>
-        <option value="C">C</option>
-        <option value="D">D</option>
+        <option disabled>Selecione o Seu Médico</option>
+
 	  </select>
+  </div>
+  <div class="form-group">
+    <label>Medico</label>
+    <input type="text" name="medico" class="form-control" placeholder="Preencher com o seu Médico" disabled>
   </div>
   <div id="horario">
 	  <div class="form-group">
 		  <label for="selectHorario">Escolha o Horario</label>
-		  <select class="form-control" id="selectHorario">
-			<option value="08:00 as 08:45">08:00 as 08:45</option>
-			<option value="08:45 as 09:30">08:45 as 09:30</option>
-			<option value="09:30 as 10:15">09:30 as 10:15</option>
-			<option value="10:15 as 11:00">10:15 as 11:00</option>
-			<option value="13:30 as 14:15">13:30 as 14:15</option>
-			<option value="14:15 as 15:00">14:15 as 15:00</option>
-			<option value="15:00 as 15:45">15:00 as 15:45</option>
-			<option value="15:45 as 16:30">15:45 as 16:30</option>
-			<option value="16:30 as 17:15">16:30 as 17:15</option>
+		  <select class="form-control" id="selectHorario" onchange="changeHiddenInput(this)">
+			<option disabled>Horários Manhã</option>
+			<option value="08:00|08:45">08:00 as 08:45</option>
+			<option value="08:45|09:30">08:45 as 09:30</option>
+			<option value="09:30|10:15">09:30 as 10:15</option>
+			<option value="10:15|11:00">10:15 as 11:00</option>
+			<option disabled>Horários Tarde</option>
+			<option value="13:30|14:15">13:30 as 14:15</option>
+			<option value="14:15|15:00">14:15 as 15:00</option>
+			<option value="15:00|15:45">15:00 as 15:45</option>
+			<option value="15:45|16:30">15:45 as 16:30</option>
+			<option value="16:30|17:15">16:30 as 17:15</option>
 		  </select>
 	  </div>
   </div>
-  <div class="form-group">
-    <label>Medico</label>
-    <input type="text" name="medicoDig" class="form-control" placeholder="Preencher com o seu Médico">
-  </div>
+  <!-- /* var prim = $('#selectHorario').val().split('|')[0]; */ -->
+  <script>
+	function changeHiddenInput (objDropDown)
+    {
+				
+        var objHini = document.getElementById("horarioInicio");
+        objHini.value = objDropDown.value.split('|')[0]; ; 
+		var objHterm = document.getElementById("horarioTermino");
+        objHterm.value = objDropDown.value.split('|')[1]; ; 
+        
+    } 
+
+	function preencheMedico(){
+	  var x = document.createElement("OPTION");
+	  x.setAttribute("value", {{medico.name}} );
+	  var t = document.createTextNode({{medico.name}});
+	  x.appendChild(t);
+	  document.getElementById("selectMedico").appendChild(x);
+	}	
+	</script>
+
   <div class="form-group">
     <label>Horario de Inicio</label>
-    <input type="time" name="horarioInicioDig" class="form-control" placeholder="Horario de Inicio da Consulta">
+    <input type="time" name="horarioInicio" class="form-control" placeholder="Horario de Inicio da Consulta" disabled>
   </div>
   <div class="form-group">
     <label>Horario de Termino</label>
-    <input type="time" name="horarioTerminoDig" class="form-control" placeholder="Horario de Termino da Consulta">
+    <input type="time" name="horarioTermino" class="form-control" placeholder="Horario de Termino da Consulta" disabled>
   </div>
   <div class="form-group">
     <label>Dia</label>
@@ -61,3 +84,4 @@
   </div>
   <input type="submit" class="btn btn-primary" value="Salvar">
 </form>
+</body>

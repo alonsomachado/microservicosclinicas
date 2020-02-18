@@ -23,12 +23,12 @@
 				<a class="nav-link" data-toggle="tab" href="/agendamento/">Agendamento</a>
 			</li>
 			<li class="nav-item">
-				<a {{#if loggedIn}} class="nav-link" disabled  {{else}} class="nav-link disabled" {{/if}} data-toggle="tab" href="/checkin/">CheckIn</a>
+				<a {{#if logado}} class="nav-link" {{else}} class="nav-link disabled" {{/if}} data-toggle="tab" href="/checkin/">CheckIn</a>
 			</li>
 			<li class="nav-item">
-				<a {{#if loggedIn}} class="nav-link" disabled  {{else}} class="nav-link disabled" {{/if}} data-toggle="tab" href="/pagamento/">Pagamento</a>
+				<a {{#if logado}} class="nav-link" {{else}} class="nav-link disabled" {{/if}} data-toggle="tab" href="/pagamento/">Pagamento</a>
 			</li>
-			{{#if loggedIn}}
+			{{#if logado}}
 			<li class="nav-item">
 				<a class="nav-link disabled" data-toggle="tab" href="/">Cadastrar Medico</a>
 			</li>

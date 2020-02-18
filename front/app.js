@@ -8,6 +8,7 @@ const axios = require('axios');
 const request = require('request'); 
 
 let logado = false;  
+console.log("Logado: "+logado);
 
 // Create Redis Client
 let client = redis.createClient(6379, "caduser.rediscaduser.default.svc.cluster.local");
@@ -31,12 +32,15 @@ app.use(bodyParser.urlencoded({extended:false}));
 // methodOverride para funcionar o DELETE
 app.use(methodOverride('_method'));
 
+//Cria Cookie de Sessao com variavel LoggedIn
 function checkIfLoggedIn(req,res,next) {
 	next();
 	return;
+	//Metodo 1
 	//req.session.loggedin = false;
+	
+	//Metodo 2
 	/*var sessionId = req.cookies.session;
-	//Cria Cookie de Sessao com variavel LoggedIn
 	if (!sessionId || sessionId.search(/^[A-Fa-f0-9]+$/) == -1) {
 		res.locals.loggedIn = false;
 		next();
@@ -48,14 +52,24 @@ app.use(checkIfLoggedIn);
 
 // Search Page
 app.get('/', function(req, res, next){
-  res.render('searchusers');
+  res.render('searchusers', { logado });
 });
 
 app.get('/logar', function(req, res, next){
 	logado = true;
+	console.log("Logado: "+logado);
+	
 	//req.session.loggedin = true;
 	//res.locals.loggedIn = true;
-  res.render('searchusers');
+  //res.render('searchusers');
+  res.redirect('/');
+});
+
+app.get('/logout', function(req, res, next){
+	logado = false;
+	console.log("Logado: "+logado);
+	
+  res.redirect('/');
 });
 
 app.post('/user/search', function(req, res, next){
@@ -122,8 +136,16 @@ app.post('/pagamento', function(req, response, next){
 
 
 app.get('/agendamento', function(req, res, next){
-	var datahj = Date();
-  res.render('addagendamento', { datahj  });
+	//Formatando a data de hoje para validacao
+	var vdatahj = new Date();
+    var stmonth = new String();
+    if( (vdatahj.getMonth()+1) < 10){
+		stmonth = "0"+(vdatahj.getMonth()+1);
+	}else{ 
+	    stmonth = (vdatahj.getMonth()+1);
+	}
+	var stringdatahj = vdatahj.getFullYear()+"-"+stmonth+"-"+vdatahj.getDate();
+  res.render('addagendamento', { datahj: stringdatahj  });
 });
 
 app.post('/agendamento', function(req, res, next){

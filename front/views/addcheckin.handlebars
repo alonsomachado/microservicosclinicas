@@ -3,19 +3,19 @@
 <form method="POST" action="/checkin/">
   <div class="form-group">
     <label>ID Agendamento</label>
-    <input type="text" name="idgendamento" class="form-control" placeholder="Nome">
+    <input type="text" name="idgendamento" class="form-control" placeholder="ID Agendamento CASO EXISTA">
   </div>
   <div class="form-group">
     <label>Nome</label>
-    <input type="text" name="name" class="form-control" placeholder="Preencher com o Nome do Utente">
+    <input type="text" name="name" class="form-control" placeholder="Preencher com o Nome do Utente" required>
   </div>
   <div class="form-group">
     <label>Utente</label>
-    <input type="text" name="utente" class="form-control" placeholder="Preencher com o Número de Utente SNS">
+    <input type="text" name="utente" class="form-control" placeholder="Preencher com o Número de Utente SNS" required>
   </div>
   <div class="form-group">
     <label>Valor</label>
-    <input type="text" name="valor" class="form-control" placeholder="Valor da Consulta ao Final">
+    <input type="text" name="valor" class="form-control" placeholder="Valor da Consulta ao Final" required>
   </div>
   <input type="submit" class="btn btn-primary" value="Salvar">
 </form>

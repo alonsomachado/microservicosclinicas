@@ -13,12 +13,32 @@
 	</form>
 </div> */ -->
 
-<div>
-{{#each this}}
-  This : {{@key}} {{@value}} + {{user.first_name}}<br>
-  {{#each user}}
-	User : {{@key}} {{@value}} + {{user.first_name}}<br>
-  {{/each}}
-{{/each}}
+<style rel="stylesheet" type="text/css">
+.tudo { display: table; width: 900px;}
+.linha { width: 100%;}
+.foto { float: left; margin-right: 10px; }
+.conteudo { margin-left: 5%; }
+</style>
+
+<div class="tudo">
+	{{#each this.users }}
+	<div class="linha">
+		<div class="foto">
+		<img src="{{image}}" width="70" height="70" alt="{{name}} foto"/>
+		</div>
+		<div class="conteudo">
+		  <!-- /* This Externo : KEY:{{@key}} Value:{{@value}} NAME: {{name}} this.NAME: {{this.name}}<br> */ -->
+		  POS: {{@key}} NAME: {{name}}<br>
+		  {{#each this}}
+			{{log this}}
+			<!-- /* User : " KEY:"{{@key}} " This: " {{this}}<br> */ -->
+			{{@key}}: {{this}} <br>
+		  {{/each}}
+		  <hr>
+		</div>
+	</div>
+	{{/each}}
+	
 </div>
+
 

@@ -78,12 +78,14 @@ app.post('/user/search', function(req, res, next){
   client.hgetall(id, function(err, obj){
     if(!obj){
       res.render('searchusers', {
-        error: 'Usuario não encontrado'
+        error: 'Usuario não encontrado',
+		logado
       });
     } else {
       obj.id = id;
       res.render('details', {
-        user: obj
+        user: obj,
+		logado
       });
     }
   });
@@ -96,7 +98,8 @@ app.get('/user/todos', function(req, res, next){
   //res.render('listdetails', {   pong
   client.hgetall('*', function(err, obj){
 	res.render('listdetails', {
-        user: obj
+        user: obj,
+		logado
     });
 	/*
     if(!obj){
@@ -113,7 +116,7 @@ app.get('/user/todos', function(req, res, next){
 });
 
 app.get('/pagamento', function(req, res, next){
-  res.render('addpagamento');
+  res.render('addpagamento', { logado });
 });
 
 app.post('/pagamento', function(req, response, next){
@@ -145,7 +148,7 @@ app.get('/agendamento', function(req, res, next){
 	    stmonth = (vdatahj.getMonth()+1);
 	}
 	var stringdatahj = vdatahj.getFullYear()+"-"+stmonth+"-"+vdatahj.getDate();
-  res.render('addagendamento', { datahj: stringdatahj  });
+  res.render('addagendamento', { datahj: stringdatahj, logado  });
 });
 
 app.post('/agendamento', function(req, res, next){
@@ -180,7 +183,76 @@ app.get('/checkin', function(req, res, next){
     )
     .then(users => {    
 	console.log(users);
-	res.render('addcheckin', { users } ); 
+	res.render('addcheckin', { users, logado } ); 
+	})
+    .catch(error => this.setState({ error, isLoading: false }));
+    
+         
+});
+
+app.get('/pagamentos/todos', function(req, res, next){
+	
+	//res.render('addcheckin');
+	
+	axios
+	.get("https://randomuser.me/api/?results=5")
+    .then(response =>
+      response.data.results.map(user => ({
+        name: `${user.name.first} ${user.name.last}`,
+        username: `${user.login.username}`,
+        email: `${user.email}`,
+        image: `${user.picture.thumbnail}`
+      }))
+    )
+    .then(users => {    
+	console.log(users);
+	res.render('listdetails', { users, logado } ); 
+	})
+    .catch(error => this.setState({ error, isLoading: false }));
+    
+         
+});
+
+app.get('/agendamentos/todos', function(req, res, next){
+	
+	//res.render('addcheckin');
+	
+	axios
+	.get("https://randomuser.me/api/?results=5")
+    .then(response =>
+      response.data.results.map(user => ({
+        name: `${user.name.first} ${user.name.last}`,
+        username: `${user.login.username}`,
+        email: `${user.email}`,
+        image: `${user.picture.thumbnail}`
+      }))
+    )
+    .then(users => {    
+	console.log(users);
+	res.render('listdetails', { users, logado } ); 
+	})
+    .catch(error => this.setState({ error, isLoading: false }));
+    
+         
+});
+
+app.get('/externo/todos', function(req, res, next){
+	
+	//res.render('addcheckin');
+	
+	axios
+	.get("https://randomuser.me/api/?results=5")
+    .then(response =>
+      response.data.results.map(user => ({
+        name: `${user.name.first} ${user.name.last}`,
+        username: `${user.login.username}`,
+        email: `${user.email}`,
+        image: `${user.picture.thumbnail}`
+      }))
+    )
+    .then(users => {    
+	console.log(users);
+	res.render('listdetails', { users, logado } ); 
 	})
     .catch(error => this.setState({ error, isLoading: false }));
     
@@ -203,7 +275,7 @@ app.post('/checkin', function(req, res, next){
 
 
 app.get('/user/add', function(req, res, next){
-  res.render('adduser');
+  res.render('adduser'{ logado });
 });
 
 // Add User Post

@@ -287,7 +287,7 @@ app.get('/externo/todos', function(req, res, next){
 app.post('/checkin', function(req, res, next){
 	
 	
-	let idagendamento = req.body.idagendamento;
+	let idagendamento = (req.body.idagendamento) ? req.body.idagendamento : "0" ;
 	let name = req.body.name;
 	let utente = req.body.utente;
 	let valor = req.body.valor;

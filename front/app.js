@@ -275,7 +275,7 @@ app.post('/checkin', function(req, res, next){
 
 
 app.get('/user/add', function(req, res, next){
-  res.render('adduser'{ logado });
+  res.render('adduser', { logado });
 });
 
 // Add User Post

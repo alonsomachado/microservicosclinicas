@@ -21,7 +21,7 @@
   </div>
   <div class="form-group">
     <label>Medico</label>
-    <input type="text" name="medico" class="form-control" placeholder="Preencher com o seu Médico" disabled>
+    <input type="text" name="medico" class="form-control" placeholder="Preencher com o seu Médico" > <!-- disabled -->
   </div>
   <div id="horario">
 	  <div class="form-group">
@@ -41,34 +41,14 @@
 		  </select>
 	  </div>
   </div>
-  <!-- /* var prim = $('#selectHorario').val().split('|')[0]; */ -->
-  <script>
-	function changeHiddenInput (objDropDown)
-    {
-				
-        var objHini = document.getElementById("horarioInicio");
-        objHini.value = objDropDown.value.split('|')[0]; ; 
-		var objHterm = document.getElementById("horarioTermino");
-        objHterm.value = objDropDown.value.split('|')[1]; ; 
-        
-    } 
-
-	function preencheMedico(){
-	  var x = document.createElement("OPTION");
-	  x.setAttribute("value", {{medico.name}} );
-	  var t = document.createTextNode({{medico.name}});
-	  x.appendChild(t);
-	  document.getElementById("selectMedico").appendChild(x);
-	}	
-	</script>
 
   <div class="form-group">
     <label>Horario de Inicio</label>
-    <input type="time" name="horarioInicio" class="form-control" placeholder="Horario de Inicio da Consulta" disabled>
+    <input type="time" name="horarioInicio" class="form-control" placeholder="Horario de Inicio da Consulta" > <!-- disabled -->
   </div>
   <div class="form-group">
     <label>Horario de Termino</label>
-    <input type="time" name="horarioTermino" class="form-control" placeholder="Horario de Termino da Consulta" disabled>
+    <input type="time" name="horarioTermino" class="form-control" placeholder="Horario de Termino da Consulta" > <!-- disabled -->
   </div>
   <div class="form-group">
     <label>Dia</label>
@@ -85,3 +65,21 @@
   <input type="submit" class="btn btn-primary" value="Salvar">
 </form>
 </body>
+
+<script>
+	function changeHiddenInput (objDropDown)
+    {	
+        var objHini = document.getElementById("horarioInicio");
+        objHini.value = objDropDown.value.split('|')[0]; ; 
+		var objHterm = document.getElementById("horarioTermino");
+        objHterm.value = objDropDown.value.split('|')[1]; ; 
+    } 
+
+	function preencheMedico(){
+	  var x = document.createElement("OPTION");
+	  x.setAttribute("value", {{medico.name}} );
+	  var t = document.createTextNode( {{medico.name}} );
+	  x.appendChild(t);
+	  document.getElementById("selectMedico").appendChild(x);
+	}	
+</script>

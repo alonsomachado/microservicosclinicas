@@ -153,14 +153,34 @@ app.get('/agendamento', function(req, res, next){
 
 app.post('/agendamento', function(req, res, next){
 	
-	/*axios.post("/api/porto/agendamento", {
+	let horarioInicio = req.body.horarioInicio;
+	let horarioTermino = req.body.horarioTermino;
+	let dia = req.body.dia;
+	let nome = req.body.nome;
+	let email  = req.body.email;
+	let medico  = req.body.medico;
+	
+	axios
+	.post("/api/agendamento", {
 		  
-		horarioInicio = req.body.horarioInicio,
-		horarioTermino = req.body.horarioTermino,
-		dia = req.body.dia,
-		nome = req.body.nome,
-		email  = req.body.email,
-		medico  = req.body.medico
+		horarioInicio: horarioInicio,
+		horarioTermino: horarioTermino,
+		dia: dia,
+		nome: nome,
+		email: email,
+		medico: medico
+	})
+	/*.then(response =>
+      response.data.results.map(user => ({
+        name: `${user.name.first} ${user.name.last}`,
+        username: `${user.login.username}`,
+        email: `${user.email}`,
+        image: `${user.picture.thumbnail}`
+      }))
+    )
+    .then(users => {    
+	console.log(users);
+	res.render('/', { users, logado } ); 
 	})*/
 	
 	res.redirect('/');
@@ -192,21 +212,20 @@ app.get('/checkin', function(req, res, next){
 
 app.get('/pagamentos/todos', function(req, res, next){
 	
-	//res.render('addcheckin');
 	
 	axios
-	.get("https://randomuser.me/api/?results=5")
+	.get("/api/pagamento/lista")
     .then(response =>
-      response.data.results.map(user => ({
-        name: `${user.name.first} ${user.name.last}`,
+      response.data.results.map(pag => ({
+        /*name: `${user.name.first} ${user.name.last}`,
         username: `${user.login.username}`,
         email: `${user.email}`,
-        image: `${user.picture.thumbnail}`
+        image: `${user.picture.thumbnail}`*/
       }))
     )
-    .then(users => {    
+    .then(pags => {    
 	console.log(users);
-	res.render('listdetails', { users, logado } ); 
+	res.render('listdetails', { pags, logado } ); 
 	})
     .catch(error => this.setState({ error, isLoading: false }));
     
@@ -214,22 +233,20 @@ app.get('/pagamentos/todos', function(req, res, next){
 });
 
 app.get('/agendamentos/todos', function(req, res, next){
-	
-	//res.render('addcheckin');
-	
+
 	axios
-	.get("https://randomuser.me/api/?results=5")
+	.get("/api/agendamento/lista")
     .then(response =>
-      response.data.results.map(user => ({
-        name: `${user.name.first} ${user.name.last}`,
+      response.data.results.map(agend => ({
+        /*name: `${user.name.first} ${user.name.last}`,
         username: `${user.login.username}`,
         email: `${user.email}`,
-        image: `${user.picture.thumbnail}`
+        image: `${user.picture.thumbnail}`*/
       }))
     )
-    .then(users => {    
+    .then(agends => {    
 	console.log(users);
-	res.render('listdetails', { users, logado } ); 
+	res.render('listdetails', { agends, logado } ); 
 	})
     .catch(error => this.setState({ error, isLoading: false }));
     

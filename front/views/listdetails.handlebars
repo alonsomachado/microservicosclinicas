@@ -39,6 +39,38 @@
 	</div>
 	{{/each}}
 	
+	{{#each this.agends }}
+	<div class="linha">
+		
+		<div class="conteudoAge">
+		  <!-- /* This Externo : KEY:{{@key}} Value:{{@value}} NAME: {{name}} this.NAME: {{this.name}}<br> */ -->
+		  POS: {{@key}} <br>
+		  {{#each this}}
+			{{log this}}
+			<!-- /* User : " KEY:"{{@key}} " This: " {{this}}<br> */ -->
+			{{@key}}: {{this}} <br>
+		  {{/each}}
+		  <hr>
+		</div>
+	</div>
+	{{/each}}
+	
+	{{#each this.pags }}
+	<div class="linha">
+		
+		<div class="conteudoPags">
+		  <!-- /* This Externo : KEY:{{@key}} Value:{{@value}} NAME: {{name}} this.NAME: {{this.name}}<br> */ -->
+		  POS: {{@key}} <br>
+		  {{#each this}}
+			{{log this}}
+			<!-- /* User : " KEY:"{{@key}} " This: " {{this}}<br> */ -->
+			{{@key}}: {{this}} <br>
+		  {{/each}}
+		  <hr>
+		</div>
+	</div>
+	{{/each}}
+	
 </div>
 
 

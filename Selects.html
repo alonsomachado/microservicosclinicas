@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>SELECTS passando pra disabled ou Hidden</h2>
+
+<body id="agend" onload="preencheMedico()">
+<form >
+    <select id="lalala" name="lalala" onchange="changeHiddenInput(this)">
+        <option value="j.hotmail.com">Jens</option>
+        <option value="a.hotmail.com">Adam</option>
+        <option value="d.homtail.com">Dan</option>
+    </select>
+    
+    <select id="Hor" name="Hor" onchange="changeHiddenInput2(this)">
+        <option disabled>Horários Manhã</option>
+		<option value="08:00|08:45">08:00 as 08:45</option>
+		<option value="08:45|09:30">08:45 as 09:30</option>
+		<option value="09:30|10:15">09:30 as 10:15</option>
+    </select>
+    <input type="hidden" name="hiddenInput" id="hiddenInput" value="" />
+    <input disabled name="horarioInicio" id="horarioInicio" value="" />
+    <input disabled name="horarioTermino" id="horarioTermino" value="" />
+ </form>
+ <p id="demo"></p>
+</body>
+
+</body>
+
+</html>
+
+<script>
+    function changeHiddenInput (objDropDown)
+    {
+        var objHini = document.getElementById("lalala");
+        objHini.value = objDropDown.value;  
+        document.getElementById("demo").innerHTML = objHini.value;
+
+    }  
+    
+    function changeHiddenInput2 (objDropDown)
+    {
+        var objHini = document.getElementById("horarioInicio");
+        objHini.value = objDropDown.value.split('|')[0];  
+		var objHterm = document.getElementById("horarioTermino");
+        objHterm.value = objDropDown.value.split('|')[1]; 
+    } 
+    
+    function preencheMedico(){
+	  var x = document.createElement("OPTION");
+	  x.setAttribute("value", "JOAO" );
+	  var t = document.createTextNode("JOAO");
+	  x.appendChild(t);
+	  document.getElementById("lalala").appendChild(x);
+	}
+</script>

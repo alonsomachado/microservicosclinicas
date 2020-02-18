@@ -192,23 +192,7 @@ app.post('/agendamento', function(req, res, next){
 
 app.get('/checkin', function(req, res, next){
 	
-	//res.render('addcheckin');
-	
-	axios
-	.get("https://randomuser.me/api/?results=5")
-    .then(response =>
-      response.data.results.map(user => ({
-        name: `${user.name.first} ${user.name.last}`,
-        username: `${user.login.username}`,
-        email: `${user.email}`,
-        image: `${user.picture.thumbnail}`
-      }))
-    )
-    .then(users => {    
-	console.log(users);
-	res.render('addcheckin', { users, logado } ); 
-	})
-    .catch(error => this.setState({ error, isLoading: false }));
+	res.render('addcheckin', { logado });
     
          
 });

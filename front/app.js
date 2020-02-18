@@ -123,18 +123,23 @@ app.post('/pagamento', function(req, response, next){
 	
 	/*app.post("/api/pagamento", function(req, res);*/
 	
-	var options = {
-        method: 'POST',
-        url: '/api/pagamento',
-    }
-    request(options, function(err, response, body) {
-        if (err) {
-            return res.status(500).end();
-        }
-        res.send(body); // send whatever you want here
-    });
+	let name = req.body.name;
+	let nif = req.body.nif;
+	let pagamento = req.body.pagamento;
+	let idatendimento = req.body.idatendimento;
 	
-	res.redirect('/api/pagamento');
+	
+	axios
+	.post("http://192.168.99.111/api/pagamento", {
+		  
+		name: name,
+		nif: nif,
+		pagamento: pagamento,
+		idatendimento: idatendimento
+
+	})
+	
+	res.redirect('/');
 });
 
 
@@ -161,7 +166,7 @@ app.post('/agendamento', function(req, res, next){
 	let medico  = req.body.medico;
 	
 	axios
-	.post("/api/agendamento", {
+	.post("http://192.168.99.111/api/agendamento", {
 		  
 		horarioInicio: horarioInicio,
 		horarioTermino: horarioTermino,
@@ -212,43 +217,48 @@ app.get('/checkin', function(req, res, next){
 
 app.get('/pagamentos/todos', function(req, res, next){
 	
-	
+	// http://192.168.99.111/api/pagamento/lista
 	axios
-	.get("/api/pagamento/lista")
+	.get("http://192.168.99.111/api/pagamento/lista")
     .then(response =>
-      response.data.results.map(pag => ({
-        /*name: `${user.name.first} ${user.name.last}`,
-        username: `${user.login.username}`,
-        email: `${user.email}`,
-        image: `${user.picture.thumbnail}`*/
+      response.data.map(pag => ({
+		id: `${pag.id}`,
+		idatendimento: `${pag.idatendimento}`,
+		name: `${pag.name}`,
+		nif: `${pag.nif}`,
+		pagamento: `${pag.pagamento}`
       }))
     )
     .then(pags => {    
-	console.log(users);
+	console.log(pags);
 	res.render('listdetails', { pags, logado } ); 
 	})
-    .catch(error => this.setState({ error, isLoading: false }));
+    .catch(error => console.log(error));
     
          
 });
 
 app.get('/agendamentos/todos', function(req, res, next){
 
+	//http://192.168.99.111/api/agendamento/lista
 	axios
-	.get("/api/agendamento/lista")
+	.get("http://192.168.99.111/api/agendamento/lista")
     .then(response =>
-      response.data.results.map(agend => ({
-        /*name: `${user.name.first} ${user.name.last}`,
-        username: `${user.login.username}`,
-        email: `${user.email}`,
-        image: `${user.picture.thumbnail}`*/
+      response.data.map(agend => ({
+		id: `${agend.id}`,
+		horarioInicio: `${agend.horarioInicio}`,
+		horarioTermino: `${agend.horarioTermino}`,
+		dia: `${agend.dia}`,
+		nome: `${agend.nome}`,
+		email: `${agend.email}`,
+		medico: `${agend.medico}`
       }))
     )
     .then(agends => {    
-	console.log(users);
+	console.log(agends);
 	res.render('listdetails', { agends, logado } ); 
 	})
-    .catch(error => this.setState({ error, isLoading: false }));
+    .catch(error => console.log(error) );
     
          
 });
@@ -278,14 +288,20 @@ app.get('/externo/todos', function(req, res, next){
 
 app.post('/checkin', function(req, res, next){
 	
-  
-	/*axios.post("/api/checkin", {
+	
+	let idagendamento = req.body.idagendamento;
+	let name = req.body.name;
+	let utente = req.body.utente;
+	let valor = req.body.valor;
+	
+	axios
+	.post("http://192.168.99.111/api/checkin", {
 		  
-		idagendamento = req.body.idagendamento,
-		notafiscal = req.body.notafiscal,
-		valor = req.body.valor
-		
-	})*/
+		idagendamento: idagendamento,
+		name: name,
+		utente: utente,
+		valor: valor
+	})
 	
 	res.redirect('/');
 });

@@ -7,7 +7,8 @@ const redis = require('redis');
 const axios = require('axios');
 const request = require('request'); 
 
-let logado = false;  
+let logado = false; 
+let minikubeip = "";
 console.log("Logado: "+logado);
 
 // Create Redis Client
@@ -38,6 +39,8 @@ function checkIfLoggedIn(req,res,next) {
 	/*if(logado = false){
 		res.redirect('/');
 	}*/
+	minikubeip = req.get('host');
+	//console.log("minikubeip: "+minikubeip);
 	next();
 	return;
 	//Metodo 1
@@ -214,8 +217,9 @@ app.get('/checkin', function(req, res, next){
 app.get('/pagamentos/todos', function(req, res, next){
 	
 	// http://192.168.99.111/api/pagamento/lista
+	let pathpag = "http://"+minikubeip+"/api/pagamento/lista";
 	axios
-	.get("http://192.168.99.111/api/pagamento/lista")
+	.get(pathpag)
     .then(response =>
       response.data.map(pag => ({
 		id: `${pag.id}`,
@@ -237,8 +241,10 @@ app.get('/pagamentos/todos', function(req, res, next){
 app.get('/agendamentos/todos', function(req, res, next){
 
 	//http://192.168.99.111/api/agendamento/lista
+	let pathagen = "http://"+minikubeip+"/api/agendamento/lista";
+	console.log("Path: "+pathagen);
 	axios
-	.get("http://192.168.99.111/api/agendamento/lista")
+	.get(pathagen)
     .then(response =>
       response.data.map(agend => ({
 		id: `${agend.id}`,
@@ -252,9 +258,10 @@ app.get('/agendamentos/todos', function(req, res, next){
     )
     .then(agends => {    
 	console.log(agends);
+	console.log("Path: "+pathagen);
 	res.render('listdetails', { agends, logado } ); 
 	})
-    .catch(error => console.log(error) );
+    .catch(error => { console.log(error); console.log("Path: "+pathagen); } );
     
          
 });
@@ -262,8 +269,9 @@ app.get('/agendamentos/todos', function(req, res, next){
 app.get('/checkin/todos', function(req, res, next){
 
 	//http://192.168.99.111/api/checkin/lista
+	let pathchk = "http://"+minikubeip+"/api/checkin/lista";
 	axios
-	.get("http://192.168.99.111/api/checkin/lista")
+	.get(pathchk)
     .then(response =>
       response.data.map(checkin => ({
 		id: `${checkin.id}`,

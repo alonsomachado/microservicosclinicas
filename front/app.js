@@ -136,7 +136,7 @@ app.get('/pagamento', function(req, res, next){
   res.render('addpagamento', { logado });
 });
 
-app.post('/pagamento', function(req, response, next){
+app.post('/pagamento', function(req, res, next){
 	
 	let name = req.body.name;
 	let nif = req.body.nif;
@@ -145,7 +145,7 @@ app.post('/pagamento', function(req, response, next){
 	
 	
 	axios
-	.post("http://192.168.99.111/api/pagamento", {
+	.post("http://"+minikubeip+"/api/pagamento", {
 		  
 		name: name,
 		nif: nif,
@@ -179,9 +179,9 @@ app.post('/agendamento', function(req, res, next){
 	let nome = req.body.nome;
 	let email  = req.body.email;
 	let medico  = req.body.medico;
-	
+
 	axios
-	.post("http://192.168.99.111/api/agendamento", {
+	.post("http://"+minikubeip+"/api/agendamento", {
 		  
 		horarioInicio: horarioInicio,
 		horarioTermino: horarioTermino,
@@ -322,7 +322,7 @@ app.post('/checkin', function(req, res, next){
 	let valor = req.body.valor;
 	
 	axios
-	.post("http://192.168.99.111/api/checkin", {
+	.post("http://"+minikubeip+"/api/checkin", {
 		  
 		idagendamento: idagendamento,
 		name: name,
